@@ -1,0 +1,8 @@
+# Linguist overrides for the scripts folder except index.html
+!scripts/* linguist-vendored=false
+/scripts/index.html linguist-vendored
+/scripts/*.md linguist-vendored
+
+# Disable linguist for python scripts in root folder
+/*.py linguist-vendored=true
+/scripts/*.py linguist-vendored=false

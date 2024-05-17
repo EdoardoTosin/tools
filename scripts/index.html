@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Automation Tools" property="og:site_name">
+    <meta content="Computer Science Odyssey: Unraveling the Tech Maze" property="og:tagline" name="tagline">
+    <meta content="Welcome to my personal tech hub! This website is a reflection of my journey in the fascinating world of technology. The blog section is a curated collection of posts demonstrating my ability to cre..." property="og:description" name="description">
+    <meta content="Edoardo Tosin" property="article:author">
+    <meta property="og:image" content="https://edoardotosin.com/assets/img/OGImg.jpg">
+    <meta content="Automation Tools" property="og:title">
+    <meta content="article" property="og:type">
+    <meta content="https://edoardotosin.com/tools" property="og:url">
+    <link rel="canonical" href="https://edoardotosin.com/tools">
+    <title>Automation Tools - Edoardo Tosin</title>
+    <!-- Style -->
+    <link href="../assets/css/style.css" rel="stylesheet" media="all" class="default" />
+    <link href="../assets/css/main.css" rel="stylesheet" media="all" class="default" />
+    <link href="../assets/css/Util.css" rel="stylesheet" media="all" class="default" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        a {
+            margin-left: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: #FFF;
+            border: none;
+            border-radius: 3px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .copy-notification {
+            position: fixed;
+            top: 20em; /* Adjusted position to avoid overlapping with the title */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            padding: 10px;
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            text-align: center;
+            width: fit-content;
+        }
+        .column {
+            float: left;
+            width: 33.33%;
+        }
+    </style>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@EdoardoTosin">
+    <meta name="twitter:creator" content="@EdoardoTosin">
+    <meta name="twitter:title" content="Automation Tools">
+    <meta name="twitter:description" content="Welcome to my personal tech hub! This website is a reflection of my journey in the fascinating world of technology. The blog section is a curated collection of posts demonstrati...">
+    <meta property="twitter:image" content="https://edoardotosin.com/assets/img/OGImg.jpg">
+</head>
+<body>
+    <h1>Automation Tools</h1>
+    <div class="copy-notification" id="copyNotification">Command copied to clipboard!</div>
+    <div style="float:left; width:33%;"><ul>
+            <li>
+                <button onclick="copyCommand('hello.ps1')" title="Click to copy command: Invoke-RestMethod 'https://edoardotosin.com/tools/hello.ps1' | Invoke-Expression">Copy</button>
+                <a href="hello.ps1">hello.ps1</a>
+            </li>
+            
+
+            <li>
+                <button onclick="copyCommand('hello.py')" title="Click to copy command: curl -sSL 'https://edoardotosin.com/tools/hello.py' | python3">Copy</button>
+                <a href="hello.py">hello.py</a>
+            </li>
+            </ul></div>
+<div style="float:left; width:33%;"><ul>
+            <li>
+                <button onclick="copyCommand('hello.sh')" title="Click to copy command: curl -sSL 'https://edoardotosin.com/tools/hello.sh' | bash">Copy</button>
+                <a href="hello.sh">hello.sh</a>
+            </li>
+            
+
+            <li>
+                <button onclick="copyCommand('prepare-caddy.sh')" title="Click to copy command: curl -sSL 'https://edoardotosin.com/tools/prepare-caddy.sh' | bash">Copy</button>
+                <a href="prepare-caddy.sh">prepare-caddy.sh</a>
+            </li>
+            </ul></div>
+<div style="float:left; width:33%;"><ul></ul></div>
+    <script>
+        function copyCommand(filename) {
+            const baseUrl = 'https://edoardotosin.com/tools/';
+            let command;
+
+            if (filename.endsWith('.sh') || filename.endsWith('.bash')) {
+                command = `curl -sSL "${baseUrl}${filename}" | bash`;
+            } else if (filename.endsWith('.py') || filename.endsWith('.pyw')) {
+                command = `curl -sSL "${baseUrl}${filename}" | python3`;
+            } else if (filename.endsWith('.ps1')) {
+                command = `Invoke-RestMethod "${baseUrl}${filename}" | Invoke-Expression`;
+            } else {
+                alert('Unsupported file type!');
+                return;
+            }
+
+            navigator.clipboard.writeText(command).then(() => {
+                const notification = document.getElementById('copyNotification');
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 2000);
+            }, (err) => {
+                alert('Failed to copy!', err);
+            });
+        }
+    </script>
+</body>
+</html>
