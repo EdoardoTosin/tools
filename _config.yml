@@ -1,0 +1,74 @@
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+# URL is the base hostname with protocol for your site, eg http://example.com
+url: "https://edoardotosin.com" # the base hostname & protocol for your site, e.g. http://example.com
+
+domain_url: https://edoardotosin.com # Custom variable. Same value as url but doesn't change when debugging to 127.0.0.1
+
+# If you want to install this jekyll in a subpath (eg /digitalgarden) set it here.
+# Else keep it Empty (DON'T PUT /; Keep it empty)
+baseurl: "/tools"
+
+# Website Header, Description, Footer year and text.
+# If you are deleting this, make sure you remove it from HTML files too
+heading: Edoardo Tosin # Change this
+content: "Computer Science Odyssey: Unraveling the Tech Maze"
+description: "Discover a treasure trove of automation tools tailored for everyone. This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation."
+author: Edoardo Tosin
+link:
+    license: "https://creativecommons.org/licenses/by/4.0/"
+    mastodon: "https://mastodon.social/@edoardotosin"
+    github: "https://github.com/edoardotosin"
+    flickr: "https://www.flickr.com/photos/edoardo_tosin/"
+copyright:
+  year: 2022
+  msg: Contents under CC BY 4.0
+
+twitter: EdoardoTosin
+
+ogimg: "/assets/img/OGImg.jpg"
+
+timezone: Europe/Rome
+
+encoding: utf-8
+
+# Build settings
+theme: null
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+  math_engine: katex
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  syntax_highlighter: rouge
+
+sass:
+  style: compressed
+
+collections:
+    script:
+      output: true
+      permalink: /:name
+
+defaults:
+  - scope:
+      path: "_script/"
+    values:
+      layout: none
+      permalink: /:name
+
+exclude:
+  - .github
+  - .gitattributes
+  - .gitignore
+  - README.md
+  - LICENSE
+  - tools
+  - debug.yml
+  - debug.sh
+  - docker-compose.yml
+  - _script/*.md
+  - SCRIPT_INDEX.md

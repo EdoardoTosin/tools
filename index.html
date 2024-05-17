@@ -1,0 +1,142 @@
+---
+layout: default
+title: Automation Tools
+description: "Discover a treasure trove of automation tools tailored for everyone. This platform is your gateway to enhancing productivity with a wide array of script ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation."
+---
+
+<br>
+
+{%- assign prefix_linux = "curl -sSL" -%}
+{%- assign prefix_win_ps1 = "Invoke-RestMethod" -%}
+{%- assign postfix_python3 = "python3" -%}
+{%- assign postfix_win_ps1 = "Invoke-Expression" -%}
+
+{%- assign python_files = site.data.script | where: "type", "python" -%}
+{%- if python_files.size > 0 -%}
+<h2>Python Script</h2>
+  {%- for file in python_files -%}
+    <div class="script-container">
+      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}','{{ postfix_python3 }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python3 }}">Copy</button>
+      <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
+    </div>
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign linux_files = site.data.script | where: "type", "linux" -%}
+{%- if linux_files.size > 0 -%}
+<h2>Linux Script</h2>
+  {%- for file in linux_files -%}
+    {%- assign extension = file.name | split: '.' | last -%}
+    <div class="script-container">
+      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}','{{ extension }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ extension }}">Copy</button>
+      <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
+    </div>
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign windows_files = site.data.script | where: "type", "windows" -%}
+{%- if windows_files.size > 0 -%}
+<h2>Windows Script</h2>
+  {%- for file in windows_files -%}
+    <div class="script-container">
+      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_win_ps1 }}','{{ postfix_win_ps1 }}')" title="Click to copy command: {{ prefix_win_ps1 }} '{{ file.name | absolute_url }}' | {{ postfix_win_ps1 }}">Copy</button>
+      <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
+    </div>
+  {%- endfor -%}
+{%- endif -%}
+
+<div id="copy-notification">Command copied to clipboard!</div>
+<script>
+	function copyCommand(filename, prefix, postfix) {
+		const baseUrl = '{{ site.url }}{{ site.baseurl }}';
+		const encodedFilename = encodeURIComponent(filename);
+		const command = `${prefix} "${baseUrl}/${encodedFilename}" | ${postfix}`;
+
+		navigator.clipboard.writeText(command).then(() => {
+			const notification = document.getElementById('copy-notification');
+			notification.style.display = 'block';
+			setTimeout(() => {
+				notification.style.display = 'none';
+			}, 2000);
+		}).catch(err => {
+			alert('Failed to copy!', err);
+		});
+	}
+</script>
+
+<style>
+	html,
+	html[data-theme="light"] {
+	  --button-bg-color: #212529;
+	  --button-text-color: #fff;
+	  --copy-notification-bg: #22b772;
+	}
+
+	html[data-theme="dark"] {
+	  --button-bg-color: #f8f9fa;
+	  --button-text-color: #282832;
+	  --copy-notification-bg: #198754;
+	}
+
+	@media (prefers-color-scheme: dark) {
+	  html,
+	  html[data-theme="dark"] {
+		--button-bg-color: #f8f9fa;
+		--button-text-color: #282832;
+		--copy-notification-bg: #198754;
+	  }
+
+	  html[data-theme="light"] {
+		--button-bg-color: #212529;
+		--button-text-color: #fff;
+		--copy-notification-bg: #22b772;
+	  }
+	}
+
+	body.tools {
+	  min-height: 97vh;
+	  display: flex;
+	  flex-direction: column;
+	}
+	main.tools {
+	  flex-grow: 1;
+	}
+	.script-container {
+	  width: 100%;
+	}
+	a.tools {
+	  margin-left: 0.5em;
+	  text-decoration: none;
+	  background-image: none !important;
+	}
+	a.tools:hover {
+	  text-decoration: underline;
+	  background-image: none !important;
+	}
+	button.tools {
+	  margin-bottom: 0.5em;
+	  padding: 0.4em 0.8em;
+	  cursor: pointer;
+	  border: none;
+	  border-radius: 0.5em;
+	  background-color: var(--button-bg-color);
+	  color: var(--button-text-color);
+	  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+	}
+	button.tools:hover {
+	  background-color: var(--color-text-link);
+	}
+	#copy-notification {
+	  position: fixed;
+	  top: 20em; /* Adjusted position to avoid overlapping with the title */
+	  left: 50%;
+	  transform: translateX(-50%);
+	  display: none;
+	  padding: 0.5em;
+	  background-color: var(--copy-notification-bg);
+	  color: var(--color-text-main);
+	  border-radius: 0.3em;
+	  text-align: center;
+	  width: fit-content;
+	}
+</style>

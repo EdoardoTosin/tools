@@ -1,0 +1,10 @@
+# List of script
+
+- name: "hello.ps1"
+  type: "windows"
+- name: "hello.py"
+  type: "python"
+- name: "hello.sh"
+  type: "linux"
+- name: "prepare-caddy.sh"
+  type: "linux"

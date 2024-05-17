@@ -7,6 +7,12 @@
 # HTML page if it doesn't exist already, configures Caddy to serve the page,
 # and creates a Bash script to start Caddy at boot using cron.
 #
+# Copyright (c) 2024 Edoardo Tosin
+#
+# This file is licensed under the terms of the MIT License.
+# This program is licensed "as is" without any warranty of any kind, whether
+# express or implied.
+#
 ################################################################################
 
 # Color variables

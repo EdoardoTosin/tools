@@ -4,37 +4,56 @@
 
 This repository contains a collection of scripts designed to be executed directly from the command line through URLs. Each script is hosted online and can be invoked remotely, streamlining workflows and automating tasks across various platforms.
 
-## How to Use
+## Script Catalog
 
-To execute a script hosted on this platform, use the following command format:
+For a comprehensive list of scripts available in this repository and their usage instructions, please refer to the [SCRIPT_CATALOG.md](SCRIPT_CATALOG.md) file. It contains a variety of scripts for different platforms like Python, Linux, and Windows, along with convenient one-liner commands for downloading and executing them. Feel free to explore and utilize these scripts to streamline your workflow and automate various tasks.
 
-```bash
-curl https://edoardotosin.com/automation/script-name.sh | bash
+## Security Note
+
+:warning: *Executing scripts directly from URLs can pose security risks if the script content is not trusted. Always verify the source of the script and consider the potential implications of running remote scripts.*
+
+## How to Use in Linux
+
+To execute a script in Linux, use the following command format:
+
+```sh
+curl https://edoardotosin.com/tools/script-name.bash | bash
 ```
 
-Replace `script-name.sh` with the actual name of the script you wish to run.
+```sh
+curl https://edoardotosin.com/tools/script-name.sh | sh
+```
+
+```sh
+curl https://edoardotosin.com/tools/script-name.py | python3
+```
+
+Replace `script-name.sh`/`script-name.py` with the actual name of the script you wish to run.
+
 
 ### Passing Arguments
 
 Some scripts may require arguments. To pass arguments, append them after the script URL:
 
-```bash
-curl https://edoardotosin.com/automation/script-name.sh | bash -s -- arg1 arg2
+```sh
+curl https://edoardotosin.com/tools/script-name.sh | sh -s -- arg1 arg2
 ```
 
 Replace `arg1 arg2` with the actual arguments expected by the script.
 
-## List of Scripts
+## How to Use in Windows
 
-**[Caddy Installer Automation](scripts/prepare-caddy.sh)**
+To execute a script in Windows, use the following command format:
 
-```bash
-curl https://edoardotosin.com/automation/prepare-caddy.sh | bash
+```powershell
+Invoke-RestMethod "https://edoardotosin.com/tools/script-name.ps1" | Invoke-Expression
 ```
 
-## Security Note
+```powershell
+Invoke-RestMethod "https://edoardotosin.com/script-name.py" | python
+```
 
-Executing scripts directly from URLs can pose security risks if the script content is not trusted. Always verify the source of the script and consider the potential implications of running remote scripts.
+Replace `script-name.ps1`/`script-name.py` with the actual name of the script you wish to run.
 
 ## Contributing
 
