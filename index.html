@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta content="Automation Tools" property="og:site_name" /><meta content="Discover a treasure trove of automation tools tailored for everyone This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation." property="og:description" name="description"><meta content="Edoardo Tosin" property="article:author"><meta property="og:image" content="https://edoardotosin.com/assets/img/OGImg.jpg"><meta content="Automation Tools" property="og:title">
+    <meta content="article" property="og:type">
+    <meta content="https://edoardotosin.com/" property="og:url"><link rel="canonical" href="">
+    <!-- Title --><title>Automation Tools - Edoardo Tosin</title><!-- Favicon -->
+    <link rel="apple-touch-icon" href="https://edoardotosin.com/assets/img/apple-touch-icon.png">
+    <link rel="icon" href="https://edoardotosin.com/assets/img/favicon.png" type="image/png" sizes="48x48" />
+	<!-- Style -->
+    <link href="https://edoardotosin.com/assets/css/style.css" rel="stylesheet" media="all" class="default" />
+    <link href="https://edoardotosin.com/assets/css/main.css" rel="stylesheet" media="all" class="default" />
+    <link href="https://edoardotosin.com/assets/css/Util.css" rel="stylesheet" media="all" class="default" />
+    <style>
+		body.tools {
+			min-height: 97vh;
+			display: flex;
+			flex-direction: column;
+		}
+		main.tools {
+			flex-grow: 1;
+		}
+        ul.tools {
+            list-style-type: none;
+            padding: 0;
+			margin: 0;
+        }
+        li.tools {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+        a.tools {
+            margin-left: 10px;
+            text-decoration: none;
+        }
+        a.tools:hover {
+            text-decoration: underline;
+        }
+        button.tools {
+            margin-left: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+        }
+        .copy-notification {
+            position: fixed;
+            top: 20em; /* Adjusted position to avoid overlapping with the title */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            padding: 10px;
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            text-align: center;
+            width: fit-content;
+        }
+        .column.tools {
+            float: left;
+            width: 33.33%;
+        }
+		#copyright.tools {
+			margin-top: auto;
+			bottom: 0;
+			width: 100%; /* Ensures the footer spans the full width of the page */
+		}
+		
+    </style>
+    <!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@EdoardoTosin">
+	<meta name="twitter:creator" content="@EdoardoTosin"><meta name="twitter:title" content="Automation Tools">
+	
+	
+	<meta name="twitter:description" content="Discover a treasure trove of automation tools tailored for everyone This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation.">
+	<meta property="twitter:image" content="https://edoardotosin.com/assets/img/OGImg.jpg"></head>
+<body class="tools">
+	<main class="tools"><nav class="navbar is-transparent no-print" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" style="padding-left: 0;"; href="https://edoardotosin.com/">
+          <img src="https://edoardotosin.com/assets/img/favicon.png" alt="Logo" width="24" height="24"/>
+          <h6> Edoardo Tosin</h6></a>
+          <script src="https://edoardotosin.com/assets/js/modeswitcher.js"></script>
+          <script src="https://edoardotosin.com/assets/js/Hamburger.js"></script>
+      <div class="navbar-item navbar-dark-mode__mobile is-hidden-tablet" onclick="modeSwitcher()">
+        <div class="buttons">
+          <a class="button is-text">
+            <span class="icon is-small">
+              <img src="https://edoardotosin.com/assets/img/sun.svg" id="theme-toggle-img--mobile">
+            </span>
+          </a>
+        </div>
+      </div>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu no-print">
+      <div class="navbar-start">
+        <a href="https://edoardotosin.com/about"  target="_self" class="navbar-item" title="About">
+          About
+        </a>
+        <a href="https://edoardotosin.com/notes" target="_self" class="navbar-item" title="Notes">
+          Notes
+        </a>
+        <a href="https://edoardotosin.com/posts" target="_self" class="navbar-item" title="Posts">
+          Posts
+        </a>
+		<a href="https://edoardotosin.com/projects" target="_self" class="navbar-item" title="Projects">
+          Projects
+        </a>
+        <a href="https://edoardotosin.com/contact-me"  target="_self" class="navbar-item" title="Contact Me">
+          Contact Me
+        </a>
+      </div>
+	  <div class="navbar-item"></div>
+      <div class="navbar-end is-hidden-mobile" onclick="modeSwitcher()" >
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-text">
+              <span class="icon is-small">
+                <img src="https://edoardotosin.com/assets/img/sun.svg" id="theme-toggle-img">
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <script>
+	iconToggle();
+  </script><section class="section">
+        <div class="columns is-centered">
+		<div class="column is-8-widescreen  is-8-desktop is-8-tablet is-12-mobile">
+                <div class="column is-6-widescreen  is-8-desktop is-8-tablet is-12-mobile">
+					<p class="meta-title very-small no-print"><a href="/">← Home</a></p>
+					<div class="jumbo">Automation Tools</div>
+                </div>
+            </div>
+		</div>
+		<div style="float:left; width:33%;">
+    <ul class="tools"><li class="tools">
+          <button class="tools" onclick="copyCommand('hello.ps1')" title="Click to copy command: Invoke-RestMethod 'https://edoardotosin.com/tools/hello.ps1' | Invoke-Expression">Copy</button>
+          <a class="tools" href="hello.ps1">hello.ps1</a>
+        </li></ul>
+  </div>
+<div style="float:left; width:33%;">
+    <ul class="tools"><li class="tools">
+          <button class="tools" onclick="copyCommand('hello.py')" title="Click to copy command: python3 'https://edoardotosin.com/tools/hello.py' | python3">Copy</button>
+          <a class="tools" href="hello.py">hello.py</a>
+        </li></ul>
+  </div>
+<div style="float:left; width:33%;">
+    <ul class="tools"><li class="tools">
+          <button class="tools" onclick="copyCommand('hello.sh')" title="Click to copy command: bash 'https://edoardotosin.com/tools/hello.sh' | bash">Copy</button>
+          <a class="tools" href="hello.sh">hello.sh</a>
+        </li></ul>
+  </div>
+<div style="float:left; width:33%;">
+    <ul class="tools"><li class="tools">
+          <button class="tools" onclick="copyCommand('prepare-caddy.sh')" title="Click to copy command: bash 'https://edoardotosin.com/tools/prepare-caddy.sh' | bash">Copy</button>
+          <a class="tools" href="prepare-caddy.sh">prepare-caddy.sh</a>
+        </li></ul>
+  </div>
+
+
+<div class="copy-notification" id="copyNotification">Command copied to clipboard!</div>
+<script>
+	function copyCommand(filename) {
+		const baseUrl = 'https://edoardotosin.com/tools';
+		let command;
+
+		if (filename.endsWith('.sh') || filename.endsWith('.bash')) {
+			command = `curl -sSL "${baseUrl}/${filename}" | bash`;
+		} else if (filename.endsWith('.py') || filename.endsWith('.pyw')) {
+			command = `curl -sSL "${baseUrl}/${filename}" | python3`;
+		} else if (filename.endsWith('.ps1')) {
+			command = `Invoke-RestMethod "${baseUrl}/${filename}" | Invoke-Expression`;
+		} else {
+			alert('Unsupported file type!');
+			return;
+		}
+
+		navigator.clipboard.writeText(command).then(() => {
+			const notification = document.getElementById('copyNotification');
+			notification.style.display = 'block';
+			setTimeout(() => {
+				notification.style.display = 'none';
+			}, 2000);
+		}, (err) => {
+			alert('Failed to copy!', err);
+		});
+	}
+</script>
+
+	</section>
+	</main><div id="copyright" class="no-print">
+    <p id="copyright-notice"><a href="https://github.com/edoardotosin" class="copyright-item">&copy; 2022-24 Edoardo Tosin</a> • <a href="https://creativecommons.org/licenses/by/4.0/" class="copyright-item">Contents under CC BY 4.0</a> • <a href="https://edoardotosin.com/feed.xml" class="copyright-item">Subscribe via RSS</a> • <a href="https://edoardotosin.com/privacy-policy" class="copyright-item">Privacy Policy</a> • <a href="https://edoardotosin.com/credits" class="copyright-item">Credits</a></p>
+</div></body>
+</html>
