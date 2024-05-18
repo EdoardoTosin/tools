@@ -19,13 +19,11 @@
 		html[data-theme="light"] {
 			--button-bg-color: #212529;
 			--button-text-color: #FFF;
-			--button-bg-hover: #0B5ED7;
 		}
 
 		html[data-theme="dark"] {
 			--button-bg-color: #F8F9FA;
 			--button-text-color: #282832;
-			--button-bg-hover: #0B5ED7;
 		}
 
 		@media (prefers-color-scheme: dark) {
@@ -33,13 +31,11 @@
 			html[data-theme="dark"] {
 				--button-bg-color: #F8F9FA;
 				--button-text-color: #282832;
-				--button-bg-hover: #0B5ED7;
 			}
 
 			html[data-theme="light"] {
 				--button-bg-color: #212529;
 				--button-text-color: #FFF;
-				--button-bg-hover: #0B5ED7;
 			}
 		}
 		
@@ -79,7 +75,7 @@
 			transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
 		}
 		button.tools:hover {
-			background-color: var(--button-bg-hover);
+			background-color: var(--color-text-link);
 		}
         .copy-notification {
             position: fixed;
