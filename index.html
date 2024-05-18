@@ -1,115 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <meta content="Automation Tools" property="og:site_name" /><meta content="Discover a treasure trove of automation tools tailored for everyone This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation." property="og:description" name="description"><meta content="Edoardo Tosin" property="article:author"><meta property="og:image" content="https://edoardotosin.com/assets/img/OGImg.jpg"><meta content="Automation Tools" property="og:title">
     <meta content="article" property="og:type">
     <meta content="https://edoardotosin.com/" property="og:url"><link rel="canonical" href="">
     <!-- Title --><title>Automation Tools - Edoardo Tosin</title><!-- Favicon -->
     <link rel="apple-touch-icon" href="https://edoardotosin.com/assets/img/apple-touch-icon.png">
     <link rel="icon" href="https://edoardotosin.com/assets/img/favicon.png" type="image/png" sizes="48x48" />
-	<!-- Style -->
+    <!-- Style -->
     <link href="https://edoardotosin.com/assets/css/style.css" rel="stylesheet" media="all" class="default" />
     <link href="https://edoardotosin.com/assets/css/main.css" rel="stylesheet" media="all" class="default" />
     <link href="https://edoardotosin.com/assets/css/Util.css" rel="stylesheet" media="all" class="default" />
     <style>
-		html,
-		html[data-theme="light"] {
-			--button-bg-color: #212529;
-			--button-text-color: #FFF;
-		}
+	html,
+	html[data-theme="light"] {
+		--button-bg-color: #212529;
+		--button-text-color: #FFF;
+	}
 
+	html[data-theme="dark"] {
+		--button-bg-color: #F8F9FA;
+		--button-text-color: #282832;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		html,
 		html[data-theme="dark"] {
 			--button-bg-color: #F8F9FA;
 			--button-text-color: #282832;
 		}
 
-		@media (prefers-color-scheme: dark) {
-			html,
-			html[data-theme="dark"] {
-				--button-bg-color: #F8F9FA;
-				--button-text-color: #282832;
-			}
+		html[data-theme="light"] {
+			--button-bg-color: #212529;
+			--button-text-color: #FFF;
+		}
+	}
 
-			html[data-theme="light"] {
-				--button-bg-color: #212529;
-				--button-text-color: #FFF;
-			}
-		}
-		
-		body.tools {
-			min-height: 97vh;
-			display: flex;
-			flex-direction: column;
-		}
-		main.tools {
-			flex-grow: 1;
-		}
-        ul.tools {
-            list-style-type: none;
-            padding: 0;
-			margin: 0;
-        }
-        li.tools {
-            margin: 0.25em 0;
-            display: flex;
-            align-items: center;
-        }
-        a.tools {
-            margin-left: 0.5em;
-            text-decoration: none;
-        }
-        a.tools:hover {
-            text-decoration: underline;
-        }
-        button.tools {
-			margin-left: 0.5em;
-			padding: 0.4em 0.8em;
-			cursor: pointer;
-			border: none;
-			border-radius: 0.5em;
-			background-color: var(--button-bg-color);
-			color: var(--button-text-color);
-			transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
-		}
-		button.tools:hover {
-			background-color: var(--color-text-link);
-		}
-        .copy-notification {
-            position: fixed;
-            top: 20em; /* Adjusted position to avoid overlapping with the title */
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-            padding: 0.5em;
-            background-color: #198754;
-            color: var(--color-text-main);
-            border-radius: 0.6;
-            text-align: center;
-            width: fit-content;
-        }
-        .column.tools {
-            float: left;
-            width: 33.33%;
-        }
-		#copyright.tools {
-			margin-top: auto;
-			bottom: 0;
-			width: 100%; /* Ensures the footer spans the full width of the page */
-		}
-		
+	body.tools {
+		min-height: 97vh;
+		display: flex;
+		flex-direction: column;
+	}
+	main.tools {
+		flex-grow: 1;
+	}
+	ul.tools {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	li.tools {
+		margin: 0.25em 0;
+		display: flex;
+		align-items: center;
+	}
+	a.tools {
+		margin-left: 0.5em;
+		text-decoration: none;
+	}
+	a.tools:hover {
+		text-decoration: underline;
+	}
+	button.tools {
+		margin-left: 0.5em;
+		padding: 0.4em 0.8em;
+		cursor: pointer;
+		border: none;
+		border-radius: 0.5em;
+		background-color: var(--button-bg-color);
+		color: var(--button-text-color);
+		transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+	}
+	button.tools:hover {
+		background-color: var(--color-text-link);
+	}
+	.copy-notification {
+		position: fixed;
+		top: 20em; /* Adjusted position to avoid overlapping with the title */
+		left: 50%;
+		transform: translateX(-50%);
+		display: none;
+		padding: 0.5em;
+		background-color: #198754;
+		color: var(--color-text-main);
+		border-radius: 0.6;
+		text-align: center;
+		width: fit-content;
+	}
+	.column.tools {
+		float: left;
+		width: 33.33%;
+	}
+	#copyright.tools {
+		margin-top: auto;
+		bottom: 0;
+		width: 100%; /* Ensures the footer spans the full width of the page */
+	}
     </style>
     <!-- Twitter -->
-	<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@EdoardoTosin">
-	<meta name="twitter:creator" content="@EdoardoTosin"><meta name="twitter:title" content="Automation Tools">
-	
-	
-	<meta name="twitter:description" content="Discover a treasure trove of automation tools tailored for everyone This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation.">
-	<meta property="twitter:image" content="https://edoardotosin.com/assets/img/OGImg.jpg"></head>
+    <meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@EdoardoTosin">
+    <meta name="twitter:creator" content="@EdoardoTosin"><meta name="twitter:title" content="Automation Tools">  
+    <meta name="twitter:description" content="Discover a treasure trove of automation tools tailored for everyone This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation."> <meta property="twitter:image" content="https://edoardotosin.com/assets/img/OGImg.jpg"></head>
+
 <body class="tools">
-	<main class="tools"><nav class="navbar is-transparent no-print" role="navigation" aria-label="main navigation">
+    <main class="tools"><nav class="navbar is-transparent no-print" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" style="padding-left: 0;"; href="https://edoardotosin.com/">
           <img src="https://edoardotosin.com/assets/img/favicon.png" alt="Logo" width="24" height="24"/>
@@ -167,15 +165,15 @@
   <script>
 	iconToggle();
   </script><section class="section">
-        <div class="columns is-centered">
-		<div class="column is-8-widescreen  is-8-desktop is-8-tablet is-12-mobile">
-                <div class="column is-6-widescreen  is-8-desktop is-8-tablet is-12-mobile">
-					<p class="meta-title very-small no-print"><a href="/">← Home</a></p>
-					<div class="jumbo">Automation Tools</div>
+            <div class="columns is-centered">
+                <div class="column is-8-widescreen  is-8-desktop is-8-tablet is-12-mobile">
+                    <div class="column is-6-widescreen  is-8-desktop is-8-tablet is-12-mobile">
+                        <p class="meta-title very-small no-print"><a href="/">← Home</a></p>
+                        <div class="jumbo">Automation Tools</div>
+                    </div>
                 </div>
             </div>
-		</div>
-		<div style="float:left; width:33%;">
+            <div style="float:left; width:33%;">
     <ul class="tools"><li class="tools">
           <button class="tools" onclick="copyCommand('hello.ps1')" title="Click to copy command: Invoke-RestMethod 'https://edoardotosin.com/tools/hello.ps1' | Invoke-Expression">Copy</button>
           <a class="tools" href="hello.ps1">hello.ps1</a>
@@ -230,8 +228,9 @@
 	}
 </script>
 
-	</section>
-	</main><div id="copyright" class="no-print">
+        </section>
+    </main><div id="copyright" class="no-print">
     <p id="copyright-notice"><a href="https://github.com/edoardotosin" class="copyright-item">&copy; 2022-24 Edoardo Tosin</a> • <a href="https://creativecommons.org/licenses/by/4.0/" class="copyright-item">Contents under CC BY 4.0</a> • <a href="https://edoardotosin.com/feed.xml" class="copyright-item">Subscribe via RSS</a> • <a href="https://edoardotosin.com/privacy-policy" class="copyright-item">Privacy Policy</a> • <a href="https://edoardotosin.com/credits" class="copyright-item">Credits</a></p>
 </div></body>
+
 </html>
