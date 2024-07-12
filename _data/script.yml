@@ -8,3 +8,5 @@
   type: "linux"
 - name: "prepare-caddy.sh"
   type: "linux"
+- name: "prepare-picamera-noir.sh"
+  type: "linux"

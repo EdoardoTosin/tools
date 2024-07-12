@@ -22,6 +22,12 @@
   curl -sSL "https://edoardotosin.com/tools/prepare-caddy.sh" | sh
   ```
 
+- [prepare-picamera-noir.sh](_script/prepare-picamera-noir.sh)
+
+  ```
+  curl -sSL "https://edoardotosin.com/tools/prepare-picamera-noir.sh" | sh
+  ```
+
 ## Windows
 
 - [hello.ps1](_script/hello.ps1)
