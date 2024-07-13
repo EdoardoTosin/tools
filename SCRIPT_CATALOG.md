@@ -22,10 +22,22 @@
   curl -sSL "https://edoardotosin.com/tools/prepare-caddy.sh" | sh
   ```
 
+- [prepare-dns-server.sh](_script/prepare-dns-server.sh)
+
+  ```
+  curl -sSL "https://edoardotosin.com/tools/prepare-dns-server.sh" | sh
+  ```
+
 - [prepare-picamera-noir.sh](_script/prepare-picamera-noir.sh)
 
   ```
   curl -sSL "https://edoardotosin.com/tools/prepare-picamera-noir.sh" | sh
+  ```
+
+- [prepare-reverse-proxy-server.sh](_script/prepare-reverse-proxy-server.sh)
+
+  ```
+  curl -sSL "https://edoardotosin.com/tools/prepare-reverse-proxy-server.sh" | sh
   ```
 
 ## Windows
