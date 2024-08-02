@@ -14,3 +14,5 @@
   type: "linux"
 - name: "prepare-reverse-proxy-server.sh"
   type: "linux"
+- name: "winfetch.ps1"
+  type: "windows"

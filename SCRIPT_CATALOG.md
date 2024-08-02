@@ -48,3 +48,9 @@
   Invoke-RestMethod "https://edoardotosin.com/tools/hello.ps1" | Invoke-Expression
   ```
 
+- [winfetch.ps1](_script/winfetch.ps1)
+
+  ```
+  Invoke-RestMethod "https://edoardotosin.com/tools/winfetch.ps1" | Invoke-Expression
+  ```
+
