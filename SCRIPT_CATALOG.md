@@ -10,6 +10,12 @@
 
 ## Linux
 
+- [docker-setup.sh](_script/docker-setup.sh)
+
+  ```
+  curl -sSL "https://edoardotosin.com/tools/docker-setup.sh" | sh
+  ```
+
 - [hello.sh](_script/hello.sh)
 
   ```

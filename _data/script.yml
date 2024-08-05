@@ -1,5 +1,7 @@
 # List of script
 
+- name: "docker-setup.sh"
+  type: "linux"
 - name: "hello.ps1"
   type: "windows"
 - name: "hello.py"
