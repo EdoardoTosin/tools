@@ -5,6 +5,8 @@
 #
 # Script to install Shiori docker container on a Raspberry Pi.
 #
+# Note: The script must run with root permissions.
+#
 # Copyright (c) 2024 Edoardo Tosin
 #
 # This file is licensed under the terms of the MIT License.
