@@ -16,9 +16,7 @@ module Jekyll
         case File.extname(script)
         when '.py', '.pyw'
           python_scripts << script
-        when '.bash'
-          linux_scripts << script
-        when '.sh'
+        when '.bash', '.sh'
           linux_scripts << script
         when '.ps1'
           windows_scripts << script
@@ -39,12 +37,16 @@ module Jekyll
       unless linux_scripts.empty?
         content += "## Linux\n\n"
         linux_scripts.each do |script|
+          # Check for the specific note in the script
+          script_content = File.read(script)
+          use_sudo = script_content.include?("Note: The script must run with root permissions.")
+
           content += "- [#{File.basename(script)}](#{script})\n\n  ```\n"
           content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\""
           if File.extname(script) == '.bash'
-            content += " | bash\n"
+            content += use_sudo ? " | sudo bash\n" : " | bash\n"
           else
-            content += " | sh\n"
+            content += use_sudo ? " | sudo sh\n" : " | sh\n"
           end
           content += "  ```\n\n"
         end

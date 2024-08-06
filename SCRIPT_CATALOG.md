@@ -13,7 +13,7 @@
 - [docker-setup.sh](_script/docker-setup.sh)
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/docker-setup.sh" | sh
+  curl -sSL "https://edoardotosin.com/tools/docker-setup.sh" | sudo sh
   ```
 
 - [hello.sh](_script/hello.sh)
@@ -49,7 +49,7 @@
 - [shiori-setup.sh](_script/shiori-setup.sh)
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/shiori-setup.sh" | sh
+  curl -sSL "https://edoardotosin.com/tools/shiori-setup.sh" | sudo sh
   ```
 
 ## Windows

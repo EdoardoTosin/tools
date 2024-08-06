@@ -27,8 +27,12 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 <h2>Linux Script</h2>
   {%- for file in linux_files -%}
     {%- assign extension = file.name | split: '.' | last -%}
+    {%- assign command_prefix = "" -%}
+    {%- if file.root == "true" -%}
+      {%- assign command_prefix = "sudo " -%}
+    {%- endif -%}
     <div class="script-container">
-      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}','{{ extension }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ extension }}">Copy</button>
+      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}', '{{ command_prefix }}{{ extension }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ command_prefix }}{{ extension }}">Copy</button>
       <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
     </div>
   {%- endfor -%}
