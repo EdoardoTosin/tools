@@ -10,6 +10,18 @@
 
 ## Linux
 
+- [caddy-setup.sh](_script/caddy-setup.sh)
+
+  ```
+  curl -sSL "https://edoardotosin.com/tools/caddy-setup.sh" | sh
+  ```
+
+- [dns-server-setup.sh](_script/dns-server-setup.sh)
+
+  ```
+  curl -sSL "https://edoardotosin.com/tools/dns-server-setup.sh" | sh
+  ```
+
 - [docker-setup.sh](_script/docker-setup.sh)
 
   ```
@@ -22,28 +34,16 @@
   curl -sSL "https://edoardotosin.com/tools/hello.sh" | sh
   ```
 
-- [prepare-caddy.sh](_script/prepare-caddy.sh)
+- [picamera-noir-setup.sh](_script/picamera-noir-setup.sh)
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/prepare-caddy.sh" | sh
+  curl -sSL "https://edoardotosin.com/tools/picamera-noir-setup.sh" | sh
   ```
 
-- [prepare-dns-server.sh](_script/prepare-dns-server.sh)
+- [reverse-proxy-server-setup.sh](_script/reverse-proxy-server-setup.sh)
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/prepare-dns-server.sh" | sh
-  ```
-
-- [prepare-picamera-noir.sh](_script/prepare-picamera-noir.sh)
-
-  ```
-  curl -sSL "https://edoardotosin.com/tools/prepare-picamera-noir.sh" | sh
-  ```
-
-- [prepare-reverse-proxy-server.sh](_script/prepare-reverse-proxy-server.sh)
-
-  ```
-  curl -sSL "https://edoardotosin.com/tools/prepare-reverse-proxy-server.sh" | sh
+  curl -sSL "https://edoardotosin.com/tools/reverse-proxy-server-setup.sh" | sh
   ```
 
 - [shiori-setup.sh](_script/shiori-setup.sh)
