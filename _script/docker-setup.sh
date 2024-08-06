@@ -6,6 +6,8 @@
 # Script to install Docker and Docker Compose on Raspberry Pi Zero W
 # and Raspberry Pi Zero 2 W.
 #
+# Note: The script must run with root permissions.
+#
 # Copyright (c) 2024 Edoardo Tosin
 #
 # This file is licensed under the terms of the MIT License.
