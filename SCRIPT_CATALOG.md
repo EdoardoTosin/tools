@@ -46,6 +46,12 @@
   curl -sSL "https://edoardotosin.com/tools/prepare-reverse-proxy-server.sh" | sh
   ```
 
+- [shiori-setup.sh](_script/shiori-setup.sh)
+
+  ```
+  curl -sSL "https://edoardotosin.com/tools/shiori-setup.sh" | sh
+  ```
+
 ## Windows
 
 - [hello.ps1](_script/hello.ps1)
