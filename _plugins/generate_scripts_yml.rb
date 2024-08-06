@@ -48,7 +48,7 @@ module Jekyll
 
     def write_yaml(path, data)
       File.open(path, 'w') do |file|
-        file.puts "# List of script"
+        file.puts "# List of scripts"
         file.puts ""
         data.each do |script|
           file.puts "- name: \"#{script['name']}\""

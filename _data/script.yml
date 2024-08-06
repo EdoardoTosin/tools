@@ -1,4 +1,4 @@
-# List of script
+# List of scripts
 
 - name: "docker-setup.sh"
   type: "linux"
