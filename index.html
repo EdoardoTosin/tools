@@ -16,7 +16,7 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 <h2>Python Script</h2>
   {%- for file in python_files -%}
     <div class="script-container">
-      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}','{{ postfix_python3 }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python3 }}">Copy</button>
+      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}', '{{ postfix_python3 }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python3 }}">Copy</button>
       <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
     </div>
   {%- endfor -%}
@@ -39,7 +39,7 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 <h2>Windows Script</h2>
   {%- for file in windows_files -%}
     <div class="script-container">
-      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_win_ps1 }}','{{ postfix_win_ps1 }}')" title="Click to copy command: {{ prefix_win_ps1 }} '{{ file.name | absolute_url }}' | {{ postfix_win_ps1 }}">Copy</button>
+      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_win_ps1 }}', '{{ postfix_win_ps1 }}')" title="Click to copy command: {{ prefix_win_ps1 }} '{{ file.name | absolute_url }}' | {{ postfix_win_ps1 }}">Copy</button>
       <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
     </div>
   {%- endfor -%}
