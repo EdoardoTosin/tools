@@ -16,12 +16,6 @@
   curl -sSL "https://edoardotosin.com/tools/caddy-setup.sh" | sh
   ```
 
-- [dns-server-setup.sh](_script/dns-server-setup.sh)
-
-  ```
-  curl -sSL "https://edoardotosin.com/tools/dns-server-setup.sh" | sh
-  ```
-
 - [docker-setup.sh](_script/docker-setup.sh)
 
   ```
@@ -38,12 +32,6 @@
 
   ```
   curl -sSL "https://edoardotosin.com/tools/picamera-noir-setup.sh" | sh
-  ```
-
-- [reverse-proxy-server-setup.sh](_script/reverse-proxy-server-setup.sh)
-
-  ```
-  curl -sSL "https://edoardotosin.com/tools/reverse-proxy-server-setup.sh" | sh
   ```
 
 - [shiori-setup.sh](_script/shiori-setup.sh)
