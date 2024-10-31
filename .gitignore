@@ -9,3 +9,4 @@ vendor/
 tools/
 /*.ps1
 /*.sh
+.script_hash
