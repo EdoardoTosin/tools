@@ -27,7 +27,7 @@ module Jekyll
       ensure_directory_exists(script_dir)
       scripts = find_scripts(script_dir)
 
-      # Compute hash of the current state of scripts
+      # Compute hash of the current state of scripts (including any changes, additions, or deletions)
       current_hash = compute_hash(scripts)
       previous_hash = read_previous_hash
 
@@ -60,7 +60,7 @@ module Jekyll
 
     def write_yaml(path, data)
       File.open(path, 'w') do |file|
-        file.puts "# List of scripts"
+        file.puts "# List of script"
         file.puts ""
         data.each do |script|
           file.puts "- name: \"#{script['name']}\""
@@ -76,7 +76,7 @@ module Jekyll
     def generate_script_catalog_md(path, scripts, site)
       python_scripts, linux_scripts, windows_scripts = categorize_scripts(scripts)
 
-      content = "# List of Scripts\n\n"
+      content = "# List of Script\n\n"
       content += generate_section("Python", python_scripts, site) unless python_scripts.empty?
       content += generate_section("Linux", linux_scripts, site, true) unless linux_scripts.empty?
       content += generate_section("Windows", windows_scripts, site) unless windows_scripts.empty?
@@ -111,20 +111,30 @@ module Jekyll
       content = "## #{title}\n\n"
       scripts.each do |script|
         script_name = File.basename(script)
-        script_url = "#{site_url_baseurl(site)}/#{script_name}"
-        
-        content += "- [#{script_name}](#{script})\n\n  ```\n"
+        # Get the relative path of the script file from the _script directory
+        relative_path = Pathname.new(script).relative_path_from(Pathname.new(site.source)).to_s
+
+        content += "- [#{script_name}](#{relative_path})\n\n"
+
         if title == "Python"
-          content += "  curl -sSL \"#{script_url}\" | python3\n"
+          content += "  Linux:\n\n  ```\n"
+          content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python3\n"
+          content += "  ```\n\n"
+          content += "  Windows:\n\n  ```\n"
+          content += "  Invoke-RestMethod \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
+          content += "  ```\n\n"
         elsif title == "Linux"
+          content += "  ```\n"
           use_sudo = check_sudo && script_requires_root?(script)
-          content += "  curl -sSL \"#{script_url}\""
+          content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\""
           content += use_sudo ? " | sudo " : " | "
           content += (File.extname(script) == '.bash' ? "bash" : "sh") + "\n"
+          content += "  ```\n\n"
         elsif title == "Windows"
-          content += "  Invoke-RestMethod \"#{script_url}\" | Invoke-Expression\n"
+          content += "  ```\n"
+          content += "  Invoke-RestMethod \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | Invoke-Expression\n"
+          content += "  ```\n\n"
         end
-        content += "  ```\n\n"
       end
       content
     end
@@ -148,10 +158,15 @@ module Jekyll
       Dir.glob(File.join(script_dir, '**/*')).select { |file| SCRIPT_EXTENSIONS.key?(File.extname(file)) }
     end
 
-    # Hashing methods
+    # Hashing methods: Computes a unique hash based on file paths, contents, and modification times
     def compute_hash(scripts)
       digest = Digest::SHA256.new
-      scripts.each { |file| digest.update(File.read(file)) }
+      scripts.each do |file|
+        # Add file path, last modified time, and content to hash to detect any change, addition, or deletion
+        digest.update(file)
+        digest.update(File.mtime(file).to_s)
+        digest.update(File.read(file))
+      end
       digest.hexdigest
     end
 
