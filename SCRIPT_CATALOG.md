@@ -4,8 +4,16 @@
 
 - [hello.py](_script/hello.py)
 
+  Linux:
+
   ```
   curl -sSL "https://edoardotosin.com/tools/hello.py" | python3
+  ```
+
+  Windows:
+
+  ```
+  Invoke-RestMethod "https://edoardotosin.com/tools/hello.py" | python
   ```
 
 ## Linux
