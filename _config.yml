@@ -71,4 +71,4 @@ exclude:
   - debug.sh
   - docker-compose.yml
   - _script/*.md
-  - SCRIPT_INDEX.md
+  - SCRIPT_CATALOG.md
