@@ -60,7 +60,7 @@ module Jekyll
 
     def write_yaml(path, data)
       File.open(path, 'w') do |file|
-        file.puts "# List of script"
+        file.puts "# Script Catalog"
         file.puts ""
         data.each do |script|
           file.puts "- name: \"#{script['name']}\""
@@ -76,7 +76,10 @@ module Jekyll
     def generate_script_catalog_md(path, scripts, site)
       python_scripts, linux_scripts, windows_scripts = categorize_scripts(scripts)
 
-      content = "# List of Script\n\n"
+      # Main title with explanation of SHA-256 integrity checks
+      content = "# Script Catalog\n\n"
+      content += "_The SHA-256 hash values next to each script are provided for integrity verification._\n\n"
+
       content += generate_section("Python", python_scripts, site) unless python_scripts.empty?
       content += generate_section("Linux", linux_scripts, site, true) unless linux_scripts.empty?
       content += generate_section("Windows", windows_scripts, site) unless windows_scripts.empty?
@@ -113,8 +116,10 @@ module Jekyll
         script_name = File.basename(script)
         # Get the relative path of the script file from the _script directory
         relative_path = Pathname.new(script).relative_path_from(Pathname.new(site.source)).to_s
+        # Compute SHA-256 hash of the script
+        hash = compute_file_hash(script)
 
-        content += "- [#{script_name}](#{relative_path})\n\n"
+        content += "- [#{script_name}](#{relative_path}) `#{hash}`\n\n"
 
         if title == "Python"
           content += "  Linux:\n\n  ```\n"
@@ -143,6 +148,11 @@ module Jekyll
       site_url = site.config['domain_url'] || ''
       base_url = site.config['baseurl'] || ''
       "#{site_url}#{base_url}"
+    end
+
+    # Compute SHA-256 hash for a file
+    def compute_file_hash(file)
+      Digest::SHA256.file(file).hexdigest
     end
 
     # Utility methods
