@@ -10,7 +10,18 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
+    paths-ignore:
+      - .github
+      - .gitattributes
+      - .gitignore
+      - README.md
+      - LICENSE
+      - tools
+      - debug.yml
+      - debug.sh
+      - docker-compose.yml
+      - _script/*.md
+      - SCRIPT_CATALOG.md
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
