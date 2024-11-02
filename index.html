@@ -9,6 +9,7 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 {%- assign prefix_linux = "curl -sSL" -%}
 {%- assign prefix_win_ps1 = "Invoke-RestMethod" -%}
 {%- assign postfix_python3 = "python3" -%}
+{%- assign postfix_python = "python" -%}
 {%- assign postfix_win_ps1 = "Invoke-Expression" -%}
 
 {%- assign python_files = site.data.script | where: "type", "python" -%}
@@ -16,7 +17,13 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 <h2>Python Script</h2>
   {%- for file in python_files -%}
     <div class="script-container">
-      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}', '{{ postfix_python3 }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python3 }}">Copy</button>
+      <div class="dropdown">
+        <button class="tools" onclick="toggleDropdown(this)">Select</button>
+        <div class="dropdown-content">
+          <button class="tools dropdown-item" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}', '{{ postfix_python3 }}')"  title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python3 }}">Copy Linux</button>
+          <button class="tools dropdown-item" onclick="copyCommand('{{ file.name }}', '{{ prefix_win_ps1 }}', '{{ postfix_python }}')"  title="Click to copy command: {{ prefix_win_ps1 }} '{{ file.name | absolute_url }}' | {{ postfix_python }}">Copy Windows</button>
+        </div>
+      </div>
       <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
     </div>
   {%- endfor -%}
@@ -66,6 +73,23 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 			alert('Failed to copy!', err);
 		});
 	}
+	function toggleDropdown(button) {
+		const dropdownContent = button.nextElementSibling;
+		const isVisible = dropdownContent.classList.contains('show');
+
+		document.querySelectorAll('.dropdown-content.show').forEach(content => {
+			content.classList.remove('show');
+		});
+
+		if (!isVisible) dropdownContent.classList.toggle('show');
+	}
+	document.addEventListener('click', function(event) {
+		if (!event.target.closest('.dropdown')) {
+			document.querySelectorAll('.dropdown-content.show').forEach(content => {
+				content.classList.remove('show');
+			});
+		}
+	});
 </script>
 
 <style>
@@ -118,17 +142,47 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 	  background-image: none !important;
 	}
 	button.tools {
+	  margin-top: 0.5em;
 	  margin-bottom: 0.5em;
 	  padding: 0.4em 0.8em;
 	  cursor: pointer;
 	  border: none;
-	  border-radius: 0.5em;
 	  background-color: var(--button-bg-color);
 	  color: var(--button-text-color);
 	  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
 	}
 	button.tools:hover {
 	  background-color: var(--color-text-link);
+	}
+	.dropdown {
+	  position: relative;
+	  display: inline-block;
+	}
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: var(--button-bg-color);
+	  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	  z-index: 1;
+	  min-width: 10em;
+	}
+	.dropdown-content.show {
+	  display: block;
+	}
+	.dropdown-item {
+	  padding: 0.5em 0.8em !important;
+	  text-align: left;
+	  width: 100%;
+	  background: none;
+	  border: none;
+	  color: var(--button-text-color);
+	  cursor: pointer;
+	  border-radius: 0;
+	  margin: 0 0 !important;
+	}
+	.dropdown-item:hover {
+	  background-color: var(--copy-notification-bg);
+	  border-radius: 0;
 	}
 	#copy-notification {
 	  position: fixed;
