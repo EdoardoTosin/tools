@@ -6,90 +6,69 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 
 <br>
 
+{%- assign prefix_python_linux = "curl -sSL" -%}
+{%- assign prefix_python_win = "Invoke-RestMethod" -%}
+{%- assign postfix_python_linux = "python3" -%}
+{%- assign postfix_python_win = "python" -%}
+
 {%- assign prefix_linux = "curl -sSL" -%}
-{%- assign prefix_win_ps1 = "Invoke-RestMethod" -%}
-{%- assign postfix_python3 = "python3" -%}
-{%- assign postfix_python = "python" -%}
-{%- assign postfix_win_ps1 = "Invoke-Expression" -%}
+{%- assign postfix_linux = "bash" -%}
 
-{%- assign python_files = site.data.script | where: "type", "python" -%}
-{%- if python_files.size > 0 -%}
-<h2>Python Script</h2>
-  {%- for file in python_files -%}
-    <div class="script-container">
-      <div class="dropdown">
-        <button class="tools" onclick="toggleDropdown(this)">Select</button>
-        <div class="dropdown-content">
-          <button class="tools dropdown-item" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}', '{{ postfix_python3 }}')"  title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python3 }}">Copy Linux</button>
-          <button class="tools dropdown-item" onclick="copyCommand('{{ file.name }}', '{{ prefix_win_ps1 }}', '{{ postfix_python }}')"  title="Click to copy command: {{ prefix_win_ps1 }} '{{ file.name | absolute_url }}' | {{ postfix_python }}">Copy Windows</button>
-        </div>
+{%- assign prefix_win = "Invoke-RestMethod" -%}
+{%- assign postfix_win = "Invoke-Expression" -%}
+
+{%- assign types = site.data.script | group_by: "type" -%}
+{%- for type in types -%}
+  {%- if type.items.size > 0 -%}
+    <h2>{{ type.name | capitalize }} Script</h2>
+    {%- for file in type.items -%}
+      <div class="script-container">
+        {%- if type.name == "python" -%}
+          <div class="dropdown">
+            <button class="tools" onclick="toggleDropdown(this)">Select</button>
+            <div class="dropdown-content">
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_linux }}', '{{ postfix_python_linux }}')" title="Click to copy command: {{ prefix_python_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python_linux }}">Copy Linux</button>
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_win }}', '{{ postfix_python_win }}')" title="Click to copy command: {{ prefix_python_win }} '{{ file.name | absolute_url }}' | {{ postfix_python_win }}">Copy Windows</button>
+            </div>
+          </div>
+        {%- elsif type.name == "linux" -%}
+          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_linux }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_linux }}">Copy</button>
+        {%- elsif type.name == "windows" -%}
+          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_win }}')" title="Click to copy command: {{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_win }}">Copy</button>
+        {%- endif -%}
+        <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
       </div>
-      <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
-    </div>
-  {%- endfor -%}
-{%- endif -%}
-
-{%- assign linux_files = site.data.script | where: "type", "linux" -%}
-{%- if linux_files.size > 0 -%}
-<h2>Linux Script</h2>
-  {%- for file in linux_files -%}
-    {%- assign extension = file.name | split: '.' | last -%}
-    {%- assign command_prefix = "" -%}
-    {%- if file.root == "true" -%}
-      {%- assign command_prefix = "sudo " -%}
-    {%- endif -%}
-    <div class="script-container">
-      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_linux }}', '{{ command_prefix }}{{ extension }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ command_prefix }}{{ extension }}">Copy</button>
-      <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
-    </div>
-  {%- endfor -%}
-{%- endif -%}
-
-{%- assign windows_files = site.data.script | where: "type", "windows" -%}
-{%- if windows_files.size > 0 -%}
-<h2>Windows Script</h2>
-  {%- for file in windows_files -%}
-    <div class="script-container">
-      <button class="tools" onclick="copyCommand('{{ file.name }}', '{{ prefix_win_ps1 }}', '{{ postfix_win_ps1 }}')" title="Click to copy command: {{ prefix_win_ps1 }} '{{ file.name | absolute_url }}' | {{ postfix_win_ps1 }}">Copy</button>
-      <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
-    </div>
-  {%- endfor -%}
-{%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
 
 <div id="copy-notification">Command copied to clipboard!</div>
 <script>
-	function copyCommand(filename, prefix, postfix) {
-		const baseUrl = '{{ site.url }}{{ site.baseurl }}';
-		const encodedFilename = encodeURIComponent(filename);
-		const command = `${prefix} "${baseUrl}/${encodedFilename}" | ${postfix}`;
+  function copyCommand(url, prefix, postfix) {
+    const command = `${prefix} "${url}" | ${postfix}`;
+    
+    navigator.clipboard.writeText(command).then(() => {
+      const notification = document.getElementById('copy-notification');
+      notification.style.display = 'block';
+      setTimeout(() => notification.style.display = 'none', 2000);
+    }).catch(() => {
+      alert(`Failed to copy! Command:\n\n${command}`);
+    });
+  }
 
-		navigator.clipboard.writeText(command).then(() => {
-			const notification = document.getElementById('copy-notification');
-			notification.style.display = 'block';
-			setTimeout(() => {
-				notification.style.display = 'none';
-			}, 2000);
-		}).catch(err => {
-			alert('Failed to copy!', err);
-		});
-	}
-	function toggleDropdown(button) {
-		const dropdownContent = button.nextElementSibling;
-		const isVisible = dropdownContent.classList.contains('show');
+  function toggleDropdown(button) {
+    const dropdownContent = button.nextElementSibling;
+    document.querySelectorAll('.dropdown-content').forEach(content => {
+      if (content !== dropdownContent) content.classList.remove('show');
+    });
+    dropdownContent.classList.toggle('show');
+  }
 
-		document.querySelectorAll('.dropdown-content.show').forEach(content => {
-			content.classList.remove('show');
-		});
-
-		if (!isVisible) dropdownContent.classList.toggle('show');
-	}
-	document.addEventListener('click', function(event) {
-		if (!event.target.closest('.dropdown')) {
-			document.querySelectorAll('.dropdown-content.show').forEach(content => {
-				content.classList.remove('show');
-			});
-		}
-	});
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown-content.show').forEach(content => content.classList.remove('show'));
+    }
+  });
 </script>
 
 <style>
