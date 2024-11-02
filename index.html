@@ -17,13 +17,16 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 {%- assign prefix_win = "Invoke-RestMethod" -%}
 {%- assign postfix_win = "Invoke-Expression" -%}
 
-{%- assign types = site.data.script | group_by: "type" -%}
-{%- for type in types -%}
-  {%- if type.items.size > 0 -%}
-    <h2>{{ type.name | capitalize }} Script</h2>
-    {%- for file in type.items -%}
+{%- assign ordered_types = "linux,windows,python" | split: "," -%}
+{%- assign types = site.data.script | group_by: "type" | sort: ordered_types -%}
+
+{%- for ordered_type in ordered_types -%}
+  {%- assign filtered_type = types | where: "name", ordered_type -%}
+  {%- if filtered_type[0].items.size > 0 -%}
+    <h2>{{ ordered_type | capitalize }} Script</h2>
+    {%- for file in filtered_type[0].items -%}
       <div class="script-container">
-        {%- if type.name == "python" -%}
+        {%- if ordered_type == "python" -%}
           <div class="dropdown">
             <button class="tools" onclick="toggleDropdown(this)">Select</button>
             <div class="dropdown-content">
@@ -31,9 +34,9 @@ description: "Discover a treasure trove of automation tools tailored for everyon
               <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_win }}', '{{ postfix_python_win }}')" title="Click to copy command: {{ prefix_python_win }} '{{ file.name | absolute_url }}' | {{ postfix_python_win }}">Copy Windows</button>
             </div>
           </div>
-        {%- elsif type.name == "linux" -%}
+        {%- elsif ordered_type == "linux" -%}
           <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_linux }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_linux }}">Copy</button>
-        {%- elsif type.name == "windows" -%}
+        {%- elsif ordered_type == "windows" -%}
           <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_win }}')" title="Click to copy command: {{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_win }}">Copy</button>
         {%- endif -%}
         <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
