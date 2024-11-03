@@ -30,16 +30,16 @@ description: "Discover a treasure trove of automation tools tailored for everyon
           <div class="dropdown">
             <button class="tools" onclick="toggleDropdown(this)">Select</button>
             <div class="dropdown-content">
-              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_linux }}', '{{ postfix_python_linux }}')" title="Click to copy command: {{ prefix_python_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python_linux }}">Copy Linux</button>
-              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_win }}', '{{ postfix_python_win }}')" title="Click to copy command: {{ prefix_python_win }} '{{ file.name | absolute_url }}' | {{ postfix_python_win }}">Copy Windows</button>
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_linux }}', '{{ postfix_python_linux }}')" title="Click to copy command: &quot;{{ prefix_python_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python_linux }}&quot;">Copy Linux</button>
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_win }}', '{{ postfix_python_win }}')" title="Click to copy command: &quot;{{ prefix_python_win }} '{{ file.name | absolute_url }}' | {{ postfix_python_win }}&quot;">Copy Windows</button>
             </div>
           </div>
         {%- elsif ordered_type == "linux" -%}
-          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_linux }}')" title="Click to copy command: {{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_linux }}">Copy</button>
+          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_linux }}')" title="Click to copy command: &quot;{{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_linux }}&quot;">Copy</button>
         {%- elsif ordered_type == "windows" -%}
-          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_win }}')" title="Click to copy command: {{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_win }}">Copy</button>
+          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_win }}')" title="Click to copy command: &quot;{{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_win }}&quot;">Copy</button>
         {%- endif -%}
-        <a class="tools" href="{{ file.name }}">{{ file.name }}</a>
+        <a class="tools" href="{{ file.name | absolute_url }}">{{ file.name }}</a>
       </div>
     {%- endfor -%}
   {%- endif -%}
@@ -49,7 +49,7 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 <script>
   function copyCommand(url, prefix, postfix) {
     const command = `${prefix} "${url}" | ${postfix}`;
-    
+
     navigator.clipboard.writeText(command).then(() => {
       const notification = document.getElementById('copy-notification');
       notification.style.display = 'block';
