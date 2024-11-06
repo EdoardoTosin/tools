@@ -17,25 +17,21 @@ For a comprehensive list of scripts available in this repository and their usage
 To execute a script in Linux, use the following command format:
 
 ```sh
-curl https://edoardotosin.com/tools/script-name.bash | bash
+curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.sh | sh
 ```
 
 ```sh
-curl https://edoardotosin.com/tools/script-name.sh | sh
+curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py | python3
 ```
 
-```sh
-curl https://edoardotosin.com/tools/script-name.py | python3
-```
-
-Replace `script-name.sh`/`script-name.py` with the actual name of the script you wish to run.
+*Replace `script-name` with the actual filename of the script you wish to run.*
 
 ### Passing Arguments
 
 Some scripts may require arguments. To pass arguments, append them after the script URL:
 
 ```sh
-curl https://edoardotosin.com/tools/script-name.sh | sh -s -- arg1 arg2
+curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.sh | sh -s -- arg1 arg2
 ```
 
 Replace `arg1 arg2` with the actual arguments expected by the script.
@@ -45,14 +41,14 @@ Replace `arg1 arg2` with the actual arguments expected by the script.
 To execute a script in Windows, use the following command format:
 
 ```powershell
-Invoke-RestMethod "https://edoardotosin.com/tools/script-name.ps1" | Invoke-Expression
+Invoke-RestMethod "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.ps1" | Invoke-Expression
 ```
 
 ```powershell
-Invoke-RestMethod "https://edoardotosin.com/script-name.py" | python
+Invoke-RestMethod "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py" | python
 ```
 
-Replace `script-name.ps1`/`script-name.py` with the actual name of the script you wish to run.
+*Replace `script-name` with the actual filename of the script you wish to run.*
 
 ## :busts_in_silhouette: Contributing
 
