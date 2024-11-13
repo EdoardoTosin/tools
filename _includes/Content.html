@@ -45,11 +45,29 @@
                 {%- assign sidenote = itemparts[0] | split:sidenote_delimiter -%}
             
                 {%- if external_link[1] == nil -%}
-                    {%- assign result_posts = site.posts | where: 'title',itemparts[0] -%}  
-                    {%- assign result_posts = site.notes | where: 'title',itemparts[0] -%}
-                    {%- assign result_pages = site.pages | where: 'title',itemparts[0] -%}
+                    {%- assign result_posts = site.posts | where: 'title', itemparts[0] -%}
+                    {%- assign result_notes = site.notes | where: 'title', itemparts[0] -%}
+                    {%- assign result_pages = site.pages | where: 'title', itemparts[0] -%}
+
+                    {%- if result_posts.size == 0 and result_notes.size == 0 -%}
+                        {%- assign post_by_filename = site.posts | where_exp: "post", "post.path contains itemparts[0] | slugify" -%}
+                        {%- assign note_by_filename = site.notes | where_exp: "note", "note.path contains itemparts[0] | slugify" -%}
+                        {%- assign result_posts = post_by_filename.size > 0 ? post_by_filename : result_posts -%}
+                        {%- assign result_notes = note_by_filename.size > 0 ? note_by_filename : result_notes -%}
+                    {%- endif -%}
+
+                    {%- if result_posts.size > 0 -%}
+                        {%- assign post_url = result_posts[0].url -%}
+                    {%- elsif result_notes.size > 0 -%}
+                        {%- assign post_url = result_notes[0].url -%}
+                    {%- elsif result_pages.size > 0 -%}
+                        {%- assign post_url = result_pages[0].url -%}
+                    {%- else -%}
+                        {%- assign post_url = nil -%}
+                    {%- endif -%}
+
                     {%- assign internal_links = internal_links | append: link_joiner_delimiter | append: internal_link -%}
-                    {%- assign internal_urls = internal_urls | append: link_joiner_delimiter | append: result_posts[0].url | append: result_pages[0].url -%}
+                    {%- assign internal_urls = internal_urls | append: link_joiner_delimiter | append: post_url -%}
                 {%- else -%}
                     {%- assign external_links = external_links | append: link_joiner_delimiter | append: external_link[0] -%}
                     {%- assign external_urls = external_urls | append: link_joiner_delimiter | append: external_link[1] -%}
