@@ -9,7 +9,7 @@ _The SHA-256 hash values next to each script are provided for integrity verifica
   Linux:
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/hello.py" | python3
+  curl -sSL "https://edoardotosin.com/tools/hello.py" | python
   ```
 
   Windows:

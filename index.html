@@ -6,13 +6,10 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 
 <br>
 
-{%- assign prefix_python_linux = "curl -sSL" -%}
-{%- assign prefix_python_win = "Invoke-RestMethod" -%}
-{%- assign postfix_python_linux = "python3" -%}
-{%- assign postfix_python_win = "python" -%}
+{%- assign postfix_python = "python" -%}
 
 {%- assign prefix_linux = "curl -sSL" -%}
-{%- assign postfix_linux = "bash" -%}
+{%- assign postfix_linux = "sh" -%}
 
 {%- assign prefix_win = "Invoke-RestMethod" -%}
 {%- assign postfix_win = "Invoke-Expression" -%}
@@ -30,8 +27,8 @@ description: "Discover a treasure trove of automation tools tailored for everyon
           <div class="dropdown">
             <button class="tools" onclick="toggleDropdown(this)">Select</button>
             <div class="dropdown-content">
-              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_linux }}', '{{ postfix_python_linux }}')" title="Click to copy command: &quot;{{ prefix_python_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python_linux }}&quot;">Copy Linux</button>
-              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_python_win }}', '{{ postfix_python_win }}')" title="Click to copy command: &quot;{{ prefix_python_win }} '{{ file.name | absolute_url }}' | {{ postfix_python_win }}&quot;">Copy Windows</button>
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_python }}')" title="Click to copy command: &quot;{{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python }}&quot;">Copy Linux</button>
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_python }}')" title="Click to copy command: &quot;{{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_python }}&quot;">Copy Windows</button>
             </div>
           </div>
         {%- elsif ordered_type == "linux" -%}

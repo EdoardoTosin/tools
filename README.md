@@ -21,7 +21,7 @@ curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-na
 ```
 
 ```sh
-curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py | python3
+curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py | python
 ```
 
 *Replace `script-name` with the actual filename of the script you wish to run.*

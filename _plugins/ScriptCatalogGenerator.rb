@@ -9,7 +9,6 @@ module Jekyll
     DEFAULT_SCRIPT_DIR = '_script'
     DEFAULT_SCRIPT_YML = '_data/script.yml'
     SCRIPT_CATALOG_MD = 'SCRIPT_CATALOG.md'
-    HASH_FILE_PATH = '.script_hash' # File to store the hash of the directory state
     SCRIPT_EXTENSIONS = {
       '.sh' => 'linux',
       '.bash' => 'linux',
@@ -19,31 +18,44 @@ module Jekyll
     }
     ROOT_PERMISSION_SUBSTRING = "Note: The script must run with root permissions."
 
+    @@last_run_time = Time.now
+
     def generate(site)
       script_dir = File.join(site.source, DEFAULT_SCRIPT_DIR)
       script_yml_path = File.join(site.source, DEFAULT_SCRIPT_YML)
       md_path = File.join(site.source, SCRIPT_CATALOG_MD)
 
       ensure_directory_exists(script_dir)
-      scripts = find_scripts(script_dir)
 
-      # Compute hash of the current state of scripts (including any changes, additions, or deletions)
-      current_hash = compute_hash(scripts)
-      previous_hash = read_previous_hash
+      # Check if files are missing or if the source has changed
+      if files_missing?(script_yml_path, md_path) || source_changed?(script_dir)
+        # Retrieve all script files
+        scripts = find_scripts(script_dir)
 
-      # Only generate files if there are changes in the _script directory
-      if current_hash != previous_hash
+        # Generate files
         generate_script_yaml(script_yml_path, scripts)
         generate_script_catalog_md(md_path, scripts, site)
-        save_current_hash(current_hash)
 
+        @@last_run_time = Time.now
         Jekyll.logger.info "ScriptManagerGenerator:", "Generated #{script_yml_path} and #{md_path} with #{scripts.size} scripts."
       else
-        Jekyll.logger.info "ScriptManagerGenerator:", "No changes detected in #{DEFAULT_SCRIPT_DIR}. Skipping generation."
+        Jekyll.logger.info "ScriptManagerGenerator:", "No changes detected. Skipping generation."
       end
     end
 
     private
+
+    # Check if either of the target files is missing
+    def files_missing?(*files)
+      files.any? { |file| !File.exist?(file) }
+    end
+
+    # Check if the source directory has changed since the last run
+    def source_changed?(script_dir)
+      Dir.glob(File.join(script_dir, '**/*')).any? do |file|
+        File.mtime(file) > @@last_run_time
+      end
+    end
 
     # Generate _data/script.yml
     def generate_script_yaml(path, scripts)
@@ -123,7 +135,7 @@ module Jekyll
 
         if title == "Python"
           content += "  Linux:\n\n  ```\n"
-          content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python3\n"
+          content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
           content += "  ```\n\n"
           content += "  Windows:\n\n  ```\n"
           content += "  Invoke-RestMethod \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
@@ -166,28 +178,6 @@ module Jekyll
 
     def find_scripts(script_dir)
       Dir.glob(File.join(script_dir, '**/*')).select { |file| SCRIPT_EXTENSIONS.key?(File.extname(file)) }
-    end
-
-    # Hashing methods: Computes a unique hash based on file paths, contents, and modification times
-    def compute_hash(scripts)
-      digest = Digest::SHA256.new
-      scripts.each do |file|
-        # Add file path, last modified time, and content to hash to detect any change, addition, or deletion
-        digest.update(file)
-        digest.update(File.mtime(file).to_s)
-        digest.update(File.read(file))
-      end
-      digest.hexdigest
-    end
-
-    def read_previous_hash
-      File.exist?(HASH_FILE_PATH) ? File.read(HASH_FILE_PATH).chomp : nil
-    end
-
-    def save_current_hash(current_hash)
-      File.open(HASH_FILE_PATH, 'w') { |file| file.puts(current_hash) }
-    rescue IOError => e
-      Jekyll.logger.error "ScriptManagerGenerator:", "Failed to write hash file: #{e.message}"
     end
   end
 end
