@@ -5,7 +5,7 @@
 # This script includes provides details about the operating system, hostname,
 # user, uptime, screen resolution, CPU(s), GPU(s), memory, and local disks.
 #
-# Copyright (c) 2024 Edoardo Tosin
+# Copyright (c) 2024-25 Edoardo Tosin
 #
 # This file is licensed under the terms of the MIT License.
 # This program is licensed "as is" without any warranty of any kind, whether
@@ -22,47 +22,119 @@ __  _  _|__| _____/ ____\_____/  |_  ____ |  |__
                 \/          \/          \/     \/ 
 "@
 
-# Get System Information
-$os = Get-WmiObject -Class Win32_OperatingSystem
-$cpus = Get-WmiObject -Class Win32_Processor
-$gpus = Get-WmiObject -Class Win32_VideoController
-$memory = (Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1GB
-$disks = Get-WmiObject -Class Win32_LogicalDisk -Filter "DriveType=3"  # Filter for local disks only
-$uptime = (Get-Date) - $os.ConvertToDateTime($os.LastBootUpTime)
+# Initialize default values
+$resolution = "N/A"
 $hostname = $env:COMPUTERNAME
 $user = $env:USERNAME
-$resolution = (Get-WmiObject -Class Win32_VideoController | Select-Object -First 1).CurrentHorizontalResolution.ToString() + "x" + (Get-WmiObject -Class Win32_VideoController | Select-Object -First 1).CurrentVerticalResolution.ToString()
+$uptime = "N/A"
+$memoryString = "N/A"
+$cpus = @()
+$gpus = @()
+$disks = @()
 
-# Display colored Output
+# Get Operating System information
+try {
+    $os = Get-WmiObject -Class Win32_OperatingSystem
+    $uptime = (Get-Date) - $os.ConvertToDateTime($os.LastBootUpTime)
+} catch {
+    Write-Warning "Failed to retrieve OS information."
+}
+
+# Get CPU information
+try {
+    $cpus = Get-WmiObject -Class Win32_Processor
+} catch {
+    Write-Warning "Failed to retrieve CPU information."
+}
+
+# Get GPU information and screen resolution
+try {
+    $gpus = Get-WmiObject -Class Win32_VideoController
+    if ($gpus) {
+        $gpuInfo = $gpus | Select-Object -First 1
+        if ($gpuInfo) {
+            $horizontalRes = $gpuInfo.CurrentHorizontalResolution
+            $verticalRes = $gpuInfo.CurrentVerticalResolution
+            if ($horizontalRes -and $verticalRes) {
+                $resolution = "$horizontalRes x $verticalRes"
+            }
+        }
+    }
+} catch {
+    Write-Warning "Failed to retrieve GPU or resolution information."
+}
+
+# Get memory information
+try {
+    $memory = (Get-WmiObject -Class Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum).Sum / 1GB
+    $memoryString = "{0:N2} GB" -f $memory
+} catch {
+    Write-Warning "Failed to retrieve memory information."
+}
+
+# Get disk information (local disks only)
+try {
+    $disks = Get-WmiObject -Class Win32_LogicalDisk -Filter "DriveType=3"  # Local disks only
+} catch {
+    Write-Warning "Failed to retrieve disk information."
+}
+
+# Display ASCII Art logo
 Write-Host -ForegroundColor Cyan "$asciiArt`n"
 
-Write-Host -ForegroundColor Green "OS:            " -NoNewline; Write-Host -ForegroundColor White "$($os.Caption) $($os.Version)"
+# Display OS details
+if ($os) {
+    Write-Host -ForegroundColor Green "OS:            " -NoNewline; Write-Host -ForegroundColor White "$($os.Caption) $($os.Version)"
+} else {
+    Write-Host -ForegroundColor Green "OS:            " -NoNewline; Write-Host -ForegroundColor White "N/A"
+}
+
+# Display hostname and user
 Write-Host -ForegroundColor Green "Host:          " -NoNewline; Write-Host -ForegroundColor White "$hostname"
 Write-Host -ForegroundColor Green "User:          " -NoNewline; Write-Host -ForegroundColor White "$user"
-Write-Host -ForegroundColor Green "Uptime:        " -NoNewline; Write-Host -ForegroundColor White "$($uptime.Days) days $($uptime.Hours) hours $($uptime.Minutes) minutes"
+
+# Display uptime
+if ($uptime -ne "N/A") {
+    Write-Host -ForegroundColor Green "Uptime:        " -NoNewline; Write-Host -ForegroundColor White "$($uptime.Days) days $($uptime.Hours) hours $($uptime.Minutes) minutes"
+} else {
+    Write-Host -ForegroundColor Green "Uptime:        " -NoNewline; Write-Host -ForegroundColor White "N/A"
+}
+
+# Display resolution
 Write-Host -ForegroundColor Green "Resolution:    " -NoNewline; Write-Host -ForegroundColor White "$resolution"
 
-# Display CPU(s)
-$cpuIndex = 0
-foreach ($cpu in $cpus) {
-    Write-Host -ForegroundColor Green "CPU ${cpuIndex}:         " -NoNewline; Write-Host -ForegroundColor White "$($cpu.Name)"
-    $cpuIndex++
+# Display CPU(s) details
+if ($cpus) {
+    $cpuIndex = 0
+    foreach ($cpu in $cpus) {
+        Write-Host -ForegroundColor Green "CPU ${cpuIndex}:         " -NoNewline; Write-Host -ForegroundColor White "$($cpu.Name)"
+        $cpuIndex++
+    }
+} else {
+    Write-Host -ForegroundColor Green "CPU:           " -NoNewline; Write-Host -ForegroundColor White "N/A"
 }
 
-# Display GPU(s)
-$gpuIndex = 0
-foreach ($gpu in $gpus) {
-    Write-Host -ForegroundColor Green "GPU ${gpuIndex}:         " -NoNewline; Write-Host -ForegroundColor White "$($gpu.Name)"
-    $gpuIndex++
+# Display GPU(s) details
+if ($gpus) {
+    $gpuIndex = 0
+    foreach ($gpu in $gpus) {
+        Write-Host -ForegroundColor Green "GPU ${gpuIndex}:         " -NoNewline; Write-Host -ForegroundColor White "$($gpu.Name)"
+        $gpuIndex++
+    }
+} else {
+    Write-Host -ForegroundColor Green "GPU:           " -NoNewline; Write-Host -ForegroundColor White "N/A"
 }
 
-# Display Memory
-$memoryString = "{0:N2} GB" -f $memory
+# Display memory information
 Write-Host -ForegroundColor Green "Memory:        " -NoNewline; Write-Host -ForegroundColor White "$memoryString"
 
-# Display Disk(s)
-foreach ($disk in $disks) {
-    $diskSize = "{0:N2} GB" -f ($disk.Size / 1GB)
-    $diskFreeSpace = "{0:N2} GB" -f ($disk.FreeSpace / 1GB)
-    Write-Host -ForegroundColor Green "Disk ($($disk.DeviceID)):     " -NoNewline; Write-Host -ForegroundColor White "$diskSize (Free: $diskFreeSpace)"
+# Display disk(s) information
+if ($disks) {
+    foreach ($disk in $disks) {
+        $diskSize = "{0:N2} GB" -f ($disk.Size / 1GB)
+        $diskFreeSpace = "{0:N2} GB" -f ($disk.FreeSpace / 1GB)
+        Write-Host -ForegroundColor Green "Disk ($($disk.DeviceID)):     " -NoNewline; Write-Host -ForegroundColor White "$diskSize (Free: $diskFreeSpace)"
+    }
+} else {
+    Write-Host -ForegroundColor Green "Disk:          " -NoNewline; Write-Host -ForegroundColor White "N/A"
 }
