@@ -11,8 +11,8 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 {%- assign prefix_linux = "curl -sSL" -%}
 {%- assign postfix_linux = "sh" -%}
 
-{%- assign prefix_win = "Invoke-RestMethod" -%}
-{%- assign postfix_win = "Invoke-Expression" -%}
+{%- assign prefix_win = "irm" -%}
+{%- assign postfix_win = "iex" -%}
 
 {%- assign ordered_types = "linux,windows,python" | split: "," -%}
 {%- assign types = site.data.script | group_by: "type" | sort: ordered_types -%}

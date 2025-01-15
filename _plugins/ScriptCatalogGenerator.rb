@@ -138,7 +138,7 @@ module Jekyll
           content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
           content += "  ```\n\n"
           content += "  Windows:\n\n  ```\n"
-          content += "  Invoke-RestMethod \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
+          content += "  irm \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
           content += "  ```\n\n"
         elsif title == "Linux"
           content += "  ```\n"
@@ -149,7 +149,7 @@ module Jekyll
           content += "  ```\n\n"
         elsif title == "Windows"
           content += "  ```\n"
-          content += "  Invoke-RestMethod \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | Invoke-Expression\n"
+          content += "  irm \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | iex\n"
           content += "  ```\n\n"
         end
       end

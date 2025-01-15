@@ -15,7 +15,7 @@ _The SHA-256 hash values next to each script are provided for integrity verifica
   Windows:
 
   ```
-  Invoke-RestMethod "https://edoardotosin.com/tools/hello.py" | python
+  irm "https://edoardotosin.com/tools/hello.py" | python
   ```
 
 ## Linux
@@ -55,12 +55,12 @@ _The SHA-256 hash values next to each script are provided for integrity verifica
 - [hello.ps1](_script/hello.ps1) `a973a6a853d84bc63075e52a8f29b6fb96b84c91a64c2ba1c147d081c8f89061`
 
   ```
-  Invoke-RestMethod "https://edoardotosin.com/tools/hello.ps1" | Invoke-Expression
+  irm "https://edoardotosin.com/tools/hello.ps1" | iex
   ```
 
 - [winfetch.ps1](_script/winfetch.ps1) `b7fb2b0081e6333de1316ad4c36a53f0378cadaab9b9467da61bc51a8222e63e`
 
   ```
-  Invoke-RestMethod "https://edoardotosin.com/tools/winfetch.ps1" | Invoke-Expression
+  irm "https://edoardotosin.com/tools/winfetch.ps1" | iex
   ```
 
