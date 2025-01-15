@@ -58,7 +58,7 @@ _The SHA-256 hash values next to each script are provided for integrity verifica
   Invoke-RestMethod "https://edoardotosin.com/tools/hello.ps1" | Invoke-Expression
   ```
 
-- [winfetch.ps1](_script/winfetch.ps1) `df64a5be30a28f6012deafd81d1deb80c6102da144ec4dc2cbb786af78e8ee43`
+- [winfetch.ps1](_script/winfetch.ps1) `b7fb2b0081e6333de1316ad4c36a53f0378cadaab9b9467da61bc51a8222e63e`
 
   ```
   Invoke-RestMethod "https://edoardotosin.com/tools/winfetch.ps1" | Invoke-Expression
