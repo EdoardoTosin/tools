@@ -1,11 +1,3 @@
----
-layout: default
-title: Automation Tools
-description: "Discover a treasure trove of automation tools tailored for everyone. This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation."
----
-
-<br>
-
 {%- assign postfix_python = "python" -%}
 
 {%- assign prefix_linux = "curl -sSL" -%}
@@ -43,6 +35,7 @@ description: "Discover a treasure trove of automation tools tailored for everyon
 {%- endfor -%}
 
 <div id="copy-notification">Command copied to clipboard!</div>
+
 <script>
   function copyCommand(url, prefix, postfix) {
     const command = `${prefix} "${url}" | ${postfix}`;
