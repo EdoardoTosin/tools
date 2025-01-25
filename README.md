@@ -41,11 +41,11 @@ Replace `arg1 arg2` with the actual arguments expected by the script.
 To execute a script in Windows, use the following command format:
 
 ```powershell
-Invoke-RestMethod "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.ps1" | Invoke-Expression
+irm "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.ps1" | iex
 ```
 
 ```powershell
-Invoke-RestMethod "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py" | python
+irm "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py" | python
 ```
 
 *Replace `script-name` with the actual filename of the script you wish to run.*
