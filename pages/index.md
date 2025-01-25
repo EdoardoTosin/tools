@@ -5,7 +5,7 @@
 layout: default
 permalink: /
 title: Automation Tools
-description: "Discover a treasure trove of automation tools tailored for everyone. This platform is your gateway to enhancing productivity with a wide array of scripts ready to revolutionize your workflow. Whether you're a developer, system administrator, or simply someone looking to automate repetitive tasks, this collection has something for you. Dive in, explore, and unlock the power of automation."
+description: "A collection of personal scripts designed to streamline workflows and automate tasks, available in Python, PowerShell, and Bash. This page features scripts for various platforms, including Raspberry Pi devices. These scripts are easily accessible for remote execution, helping improve efficiency and save time."
 ---
 
 <br>
