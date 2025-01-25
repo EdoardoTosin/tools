@@ -2,7 +2,7 @@
 
 ## :sparkles: Introduction
 
-This repository contains a collection of scripts designed to be executed directly from the command line through URLs. Each script is hosted online and can be invoked remotely, streamlining workflows and automating tasks across various platforms.
+A collection of personal scripts written in Python, PowerShell, and Bash, designed to streamline workflows and automate tasks. Some scripts are specifically made for Raspberry Pi devices.
 
 ## :notebook: Script Catalog
 
