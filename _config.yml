@@ -67,7 +67,10 @@ privatelinks:
 # To enable set "enabled : true" else, use "enabled:false"
 preferences:
   search:
-    enabled: true
+    homepage:
+      enabled: true
+    feed:
+      enabled: true
   wiki_style_link:
     enabled: true
   pagepreview:
@@ -81,6 +84,7 @@ preferences:
 # To enable a homepage, change the value to true and add content to _includes/Homepage.html
 # If enable : false, notes feed will be as homepage.
   homepage:
+    limit: 8
     enabled: true ##If you need a homepage, change this to true and edit _includes/Homepage.html
   related:
     enabled: true
