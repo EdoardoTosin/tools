@@ -96,78 +96,78 @@
 </script>
 
 <style>
-	body.tools {
-	  min-height: 97vh;
-	  display: flex;
-	  flex-direction: column;
-	}
-	main.tools {
-	  flex-grow: 1;
-	}
-	.script-container {
-	  width: 100%;
-	}
-	a.tools {
-	  margin-left: 0.5em;
-	  text-decoration: none;
-	  background-image: none !important;
-	}
-	a.tools:hover {
-	  text-decoration: underline;
-	  background-image: none !important;
-	}
-	button.tools {
-	  margin-top: 0.5em;
-	  margin-bottom: 0.5em;
-	  padding: 0.4em 0.8em;
-	  border: none;
-	  background-color: var(--button-bg-color);
-	  color: var(--button-text-color);
-	  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
-	}
-	button.tools:hover {
-	  background-color: var(--color-text-link);
-	}
-	.dropdown {
-	  position: relative;
-	  display: inline-block;
-	}
-	.dropdown-content {
-	  display: none;
-	  position: absolute;
-	  background-color: var(--button-bg-color);
-	  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	  z-index: 1;
-	  min-width: 10em;
-	}
-	.dropdown-content.show {
-	  display: block;
-	}
-	.dropdown-item {
-	  padding: 0.5em 0.8em !important;
-	  text-align: left;
-	  width: 100%;
-	  background: none;
-	  border: none;
-	  color: var(--button-text-color);
-	  border-radius: 0;
-	  margin: 0 0 !important;
-	}
-	.dropdown-item:hover {
-	  background-color: var(--copy-notification-bg);
-	  border-radius: 0;
-	}
-	#copy-notification {
-	  position: fixed;
-	  top: 20em; /* Adjusted position to avoid overlapping with the title */
-	  left: 50%;
-	  transform: translateX(-50%);
-	  display: none;
-	  padding: 0.5em;
-	  background-color: var(--copy-notification-bg);
-	  color: var(--color-text-main);
-	  border-radius: 0.3em;
-	  text-align: center;
-	  width: fit-content;
-	}
+  body.tools {
+    min-height: 97vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main.tools {
+    flex-grow: 1;
+  }
+  .script-container {
+    width: 100%;
+  }
+  a.tools {
+    margin-left: 0.5em;
+    text-decoration: none;
+    background-image: none !important;
+  }
+  a.tools:hover {
+    text-decoration: underline;
+    background-image: none !important;
+  }
+  button.tools {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.4em 0.8em;
+    border: none;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+  }
+  button.tools:hover {
+    background-color: var(--color-text-link);
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--button-bg-color);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 10em;
+  }
+  .dropdown-content.show {
+    display: block;
+  }
+  .dropdown-item {
+    padding: 0.5em 0.8em !important;
+    text-align: left;
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--button-text-color);
+    border-radius: 0;
+    margin: 0 0 !important;
+  }
+  .dropdown-item:hover {
+    background-color: var(--copy-notification-bg);
+    border-radius: 0;
+  }
+  #copy-notification {
+    position: fixed;
+    top: 20em; /* Adjusted position to avoid overlapping with the title */
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    padding: 0.5em;
+    background-color: var(--copy-notification-bg);
+    color: var(--color-text-main);
+    border-radius: 0.3em;
+    text-align: center;
+    width: fit-content;
+  }
 </style>
