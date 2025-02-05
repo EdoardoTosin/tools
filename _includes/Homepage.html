@@ -38,7 +38,12 @@
 {%- assign postfix_win = "iex" -%}
 
 {%- assign ordered_types = "linux,windows,python" | split: "," -%}
-{%- assign types = site.data.script | group_by: "type" | sort: ordered_types -%}
+
+{%- if site.data.script and site.data.script.size > 0 -%}
+  {%- assign types = site.data.script | group_by: "type" | sort: ordered_types -%}
+{%- else -%}
+  <p>No scripts available. Please try again later.</p>
+{%- endif -%}
 
 {%- for ordered_type in ordered_types -%}
   {%- assign filtered_type = types | where: "name", ordered_type -%}
@@ -48,16 +53,16 @@
       <div class="script-container">
         {%- if ordered_type == "python" -%}
           <div class="dropdown">
-            <button class="tools" onclick="toggleDropdown(this)">Select</button>
+            <button class="tools" onclick="toggleDropdown(this)" aria-label="Select platform for Python script">Select</button>
             <div class="dropdown-content">
-              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_python }}')" title="Click to copy command: &quot;{{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python }}&quot;">Copy Linux</button>
-              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_python }}')" title="Click to copy command: &quot;{{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_python }}&quot;">Copy Windows</button>
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_python }}')" title="Click to copy command: &quot;{{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_python }}&quot;" aria-label="Copy Linux command for Python script">Copy Linux</button>
+              <button class="tools dropdown-item" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_python }}')" title="Click to copy command: &quot;{{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_python }}&quot;" aria-label="Copy Windows command for Python script">Copy Windows</button>
             </div>
           </div>
         {%- elsif ordered_type == "linux" -%}
-          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_linux }}')" title="Click to copy command: &quot;{{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_linux }}&quot;">Copy</button>
+          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_linux }}', '{{ postfix_linux }}')" title="Click to copy command: &quot;{{ prefix_linux }} '{{ file.name | absolute_url }}' | {{ postfix_linux }}&quot;" aria-label="Copy Linux command">Copy</button>
         {%- elsif ordered_type == "windows" -%}
-          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_win }}')" title="Click to copy command: &quot;{{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_win }}&quot;">Copy</button>
+          <button class="tools" onclick="copyCommand('{{ file.name | absolute_url }}', '{{ prefix_win }}', '{{ postfix_win }}')" title="Click to copy command: &quot;{{ prefix_win }} '{{ file.name | absolute_url }}' | {{ postfix_win }}&quot;" aria-label="Copy Windows command">Copy</button>
         {%- endif -%}
         <a class="tools" href="{{ file.name | absolute_url }}">{{ file.name }}</a>
       </div>
@@ -65,7 +70,7 @@
   {%- endif -%}
 {%- endfor -%}
 
-<div id="copy-notification">Command copied to clipboard!</div>
+<div id="copy-notification" role="alert" aria-live="assertive" tabindex="-1">Command copied to clipboard!</div>
 
 <link href="{{ site.baseurl }}/assets/css/style.css" rel="stylesheet" media="all" class="default" />
 <script src="{{ site.baseurl }}/assets/js/scripts.js"></script>

@@ -1,12 +1,23 @@
+let debounceTimeout;
+
 function copyCommand(url, prefix, postfix) {
   const command = `${prefix} "${url}" | ${postfix}`;
 
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+
   navigator.clipboard.writeText(command).then(() => {
     const notification = document.getElementById('copy-notification');
+    notification.textContent = 'Command copied to clipboard';
+    notification.style.backgroundColor = 'var(--copy-notification-bg)';
     notification.style.display = 'block';
-    setTimeout(() => notification.style.display = 'none', 2000);
+    notification.focus();
+    debounceTimeout = setTimeout(() => notification.style.display = 'none', 2000);
   }).catch(() => {
-    alert(`Failed to copy! Command:\n\n${command}`);
+    const notification = document.getElementById('copy-notification');
+    notification.textContent = 'Failed to copy command';
+    notification.style.backgroundColor = 'var(--copy-notification-bg-error)';
+    notification.style.display = 'block';
+    debounceTimeout = setTimeout(() => notification.style.display = 'none', 3000);
   });
 }
 

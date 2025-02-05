@@ -20,6 +20,9 @@ a.tools {
   margin-left: 0.5em;
   text-decoration: none;
   background-image: none !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 a.tools:hover {
@@ -82,9 +85,24 @@ button.tools:hover {
   transform: translateX(-50%);
   display: none;
   padding: 0.5em;
-  background-color: var(--copy-notification-bg);
   color: var(--color-text-main);
   border-radius: 0.3em;
   text-align: center;
   width: fit-content;
+}
+
+@media (max-width: 768px) {
+  button.tools {
+    padding: 0.8em 1.2em;
+    font-size: 1.2rem;
+  }
+  
+  .dropdown-content {
+    min-width: 100%;
+  }
+  
+  .script-container {
+    width: 100%;
+    padding: 0.5em;
+  }
 }
