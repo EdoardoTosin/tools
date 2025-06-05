@@ -10,6 +10,12 @@
 	<meta content="{{ site.content }}" property="og:tagline" name="tagline">
 	<meta content="{{ site.description | strip_html | xml_escape | truncate: 200 }}" property="og:description" name="description">
 	{%- endif -%}
+    {%- if page.keywords -%}
+    <meta content="{{ page.keywords }}" property="keywords">
+    {%- elsif site.keywords -%}
+    <meta content="{{ site.keywords }}" property="keywords">
+    {%- else -%}
+    {%- endif -%}
 	{%- if page.author -%}
 	<meta content="{{ page.author }}" property="article:author">
 	{%- elsif site.author -%}
