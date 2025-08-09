@@ -296,6 +296,15 @@ button.tools:hover {
   border-color: var(--color-text-link);
 }
 
+/* Remove underline from anchor action buttons */
+a.action-button {
+  text-decoration: none;
+}
+
+a.action-button:hover {
+  text-decoration: none;
+}
+
 /* Python Dropdown Styles */
 .python-dropdown {
   position: relative;
