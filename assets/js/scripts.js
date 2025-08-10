@@ -227,7 +227,7 @@ function redirectToGitHub(cardElement) {
   const scriptUrl = cardElement.dataset.scriptUrl;
   const scriptName = cardElement.dataset.name;
   
-  const githubBaseUrl = 'https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/';
+  const githubBaseUrl = 'https://github.com/EdoardoTosin/tools/blob/main/script/';
   const githubRawUrl = githubBaseUrl + scriptName;
   
   window.open(githubRawUrl, '_blank');
