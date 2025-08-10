@@ -6,9 +6,10 @@ module Jekyll
   class ScriptManagerGenerator < Generator
     safe true
 
-    DEFAULT_SCRIPT_DIR = '_script'
+    DEFAULT_SCRIPT_DIR = 'script'
     DEFAULT_SCRIPT_YML = '_data/script.yml'
     SCRIPT_CATALOG_MD = 'SCRIPT_CATALOG.md'
+    GITHUB_RAW_BASE_URL = 'https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script'
     SCRIPT_EXTENSIONS = {
       '.sh' => 'linux',
       '.bash' => 'linux',
@@ -126,40 +127,36 @@ module Jekyll
       content = "## #{title}\n\n"
       scripts.each do |script|
         script_name = File.basename(script)
-        # Get the relative path of the script file from the _script directory
+        # Get the relative path of the script file from the script directory
         relative_path = Pathname.new(script).relative_path_from(Pathname.new(site.source)).to_s
         # Compute SHA-256 hash of the script
         hash = compute_file_hash(script)
+        # Generate GitHub raw URL for the script
+        github_raw_url = "#{GITHUB_RAW_BASE_URL}/#{script_name}"
 
         content += "- [#{script_name}](#{relative_path}) `#{hash}`\n\n"
 
         if title == "Python"
           content += "  Linux:\n\n  ```\n"
-          content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
+          content += "  curl -sSL \"#{github_raw_url}\" | python\n"
           content += "  ```\n\n"
           content += "  Windows:\n\n  ```\n"
-          content += "  irm \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | python\n"
+          content += "  irm \"#{github_raw_url}\" | python\n"
           content += "  ```\n\n"
         elsif title == "Linux"
           content += "  ```\n"
           use_sudo = check_sudo && script_requires_root?(script)
-          content += "  curl -sSL \"#{site_url_baseurl(site)}/#{File.basename(script)}\""
+          content += "  curl -sSL \"#{github_raw_url}\""
           content += use_sudo ? " | sudo " : " | "
           content += (File.extname(script) == '.bash' ? "bash" : "sh") + "\n"
           content += "  ```\n\n"
         elsif title == "Windows"
           content += "  ```\n"
-          content += "  irm \"#{site_url_baseurl(site)}/#{File.basename(script)}\" | iex\n"
+          content += "  irm \"#{github_raw_url}\" | iex\n"
           content += "  ```\n\n"
         end
       end
       content
-    end
-
-    def site_url_baseurl(site)
-      site_url = site.config['domain_url'] || ''
-      base_url = site.config['baseurl'] || ''
-      "#{site_url}#{base_url}"
     end
 
     # Compute SHA-256 hash for a file

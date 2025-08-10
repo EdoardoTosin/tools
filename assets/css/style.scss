@@ -2,6 +2,7 @@
 layout: Stylesheet
 ---
 
+/* Tools page specific styles */
 body.tools {
   min-height: 97vh;
   display: flex;
@@ -10,10 +11,6 @@ body.tools {
 
 main.tools {
   flex-grow: 1;
-}
-
-.script-container {
-  width: 100%;
 }
 
 a.tools {
@@ -31,107 +28,36 @@ a.tools:hover {
 }
 
 button.tools {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
   padding: 0.4em 0.8em;
   border: none;
-  background-color: var(--button-bg-color);
-  color: var(--button-text-color);
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+  color: var(--color-text-main);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 button.tools:hover {
   background-color: var(--color-text-link);
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--button-bg-color);
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  min-width: 10em;
-}
-
-.dropdown-content.show {
-  display: block;
-}
-
-@media (max-width: 768px) {
-  button.tools {
-    padding: 0.8em 1.2em;
-    font-size: 1.2rem;
-  }
-  
-  .dropdown-content {
-    min-width: 100%;
-  }
-  
-  .script-container {
-    width: 100%;
-    padding: 0.5em;
-  }
-}
-
-/* Search and Filter Styles */
-.search-filter-container {
-  background: var(--color-bg-main);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.search-controls {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.search-input-wrapper {
-  position: relative;
-  flex: 1;
-  min-width: 250px;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.75rem 1rem 0.75rem 2.5rem;
+.searchbar {
+  padding: 0.15rem 1rem;
   border: 2px solid var(--color-border);
   border-radius: 8px;
-  font-size: 1rem;
-  background: var(--color-bg-main);
-  color: var(--color-text-main);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
 ::placeholder {
   color: var(--text-main);
-  opacity: 1; /* Firefox */
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--color-text-link);
-  box-shadow: 0 0 0 3px rgba(var(--color-text-link-rgb, 59, 130, 246), 0.1);
+  opacity: 0.5; /* Firefox */
 }
 
 .search-icon {
-  position: absolute;
-  left: -0.5rem;
-  top: 40%;
-  transform: translateY(-50%);
-  color: var(--color-text-secondary);
-  pointer-events: none;
+  margin-left: -0.5em !important;
+  margin-top: -0.25em !important;
+  color: var(--color-text-sub);
+  opacity: 0.7;
 }
 
+/* Filter and Sort Controls */
 .filter-controls {
   display: flex;
   gap: 0.5rem;
@@ -174,59 +100,35 @@ button.tools:hover {
   border-color: var(--color-text-link);
 }
 
-.results-info {
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-}
-
-/* Scripts Grid Styles */
-.script-type-section {
-  margin-bottom: 2.5rem;
-}
-
-.type-heading {
-  color: var(--color-text-main);
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--color-border);
-}
-
-.scripts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1.5rem;
-}
-
-.script-card {
-  background: var(--color-bg-main);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 1.5rem;
+/* Sort button SVG icon styling */
+.sort-button svg {
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: inherit;
 }
 
-.script-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: var(--color-text-link);
+/* Override hover effects for script count */
+#script-count.meta-title:hover,
+#script-count.meta-title:not(:hover) {
+  color: var(--color-text-sub) !important;
 }
 
-.script-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+/* Script count container - always reserves space to prevent layout shift */
+.script-count-container {
+  min-height: 1.5rem;
   margin-bottom: 1rem;
+  /* Always visible in layout, just content opacity changes */
 }
 
-.script-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-text-main);
-  margin: 0;
-  word-break: break-word;
+.script-count-container .count-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
+.script-count-container.show .count-content {
+  opacity: 1;
+}
+
+/* Script Type Badges */
 .script-type-badge {
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
@@ -234,6 +136,11 @@ button.tools:hover {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  margin: 1em;
+  align-self: flex-start;
+  flex-shrink: 0;
+  height: fit-content;
+  white-space: nowrap;
 }
 
 .script-type-badge.linux {
@@ -251,6 +158,7 @@ button.tools:hover {
   color: #f59e0b;
 }
 
+/* Action Buttons */
 .script-actions {
   display: flex;
   gap: 0.75rem;
@@ -274,6 +182,14 @@ button.tools:hover {
   min-width: 120px;
 }
 
+/* Button and Platform Icons */
+.button-icon,
+.platform-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .action-button.primary {
   background: var(--color-text-link);
   color: var(--color-bg-main);
@@ -292,8 +208,21 @@ button.tools:hover {
 }
 
 .action-button.secondary:hover {
-  background: var(--color-bg-secondary);
+  background: var(--color-bg-sub);
   border-color: var(--color-text-link);
+}
+
+/* SVG icon transitions */
+.action-button svg,
+.dropdown-item svg,
+.search-icon svg {
+  transition: all 0.3s ease;
+}
+
+/* Ensure SVGs inherit button text color */
+.action-button svg,
+.dropdown-item svg {
+  color: inherit;
 }
 
 /* Remove underline from anchor action buttons */
@@ -305,7 +234,7 @@ a.action-button:hover {
   text-decoration: none;
 }
 
-/* Python Dropdown Styles */
+/* Python Dropdown */
 .python-dropdown {
   position: relative;
   flex: 1;
@@ -313,6 +242,15 @@ a.action-button:hover {
 
 .dropdown-arrow {
   transition: transform 0.3s ease;
+  margin-left: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-arrow svg {
+  transition: transform 0.3s ease;
+  color: inherit;
 }
 
 .python-dropdown.active .dropdown-arrow {
@@ -365,34 +303,6 @@ a.action-button:hover {
   border-radius: 0 0 8px 8px;
 }
 
-/* No Results Styles */
-.no-results {
-  text-align: center;
-  padding: 3rem 1rem;
-}
-
-.no-results-content {
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-.no-results-icon {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 1rem;
-  opacity: 0.5;
-}
-
-.no-results h3 {
-  color: var(--color-text-main);
-  margin-bottom: 0.5rem;
-}
-
-.no-results p {
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
 /* Copy Notification */
 #copy-notification {
   position: fixed;
@@ -401,7 +311,7 @@ a.action-button:hover {
   transform: translateX(-50%);
   display: none;
   padding: 0.75rem 1.5rem;
-  background: var(--color-text-link);
+  background: var(--copy-notification-bg);
   color: var(--color-bg-main);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -411,18 +321,23 @@ a.action-button:hover {
   font-size: 0.9rem;
 }
 
+/* No Results Icon */
+.no-results-icon {
+  display: block;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+  color: var(--color-text-sub);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
-  .search-controls {
+  .meta-head {
     flex-direction: column;
+    gap: 1rem;
   }
   
   .filter-controls {
     justify-content: space-between;
-  }
-  
-  .scripts-grid {
-    grid-template-columns: 1fr;
   }
   
   .script-actions {
@@ -432,6 +347,15 @@ a.action-button:hover {
   .action-button {
     flex: none;
     min-width: auto;
+  }
+  
+  button.tools {
+    padding: 0.8em 1.2em;
+    font-size: 1.2rem;
+  }
+  
+  .dropdown-content {
+    min-width: 100%;
   }
   
   #copy-notification {
@@ -444,16 +368,11 @@ a.action-button:hover {
 }
 
 @media (max-width: 480px) {
-  .search-filter-container {
-    padding: 1rem;
-  }
-  
   .script-card {
     padding: 1rem;
   }
   
-  .script-header {
-    flex-direction: column;
+  .meta-head {
     align-items: flex-start;
     gap: 0.5rem;
   }

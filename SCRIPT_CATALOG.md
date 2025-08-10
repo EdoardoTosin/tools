@@ -4,63 +4,63 @@ _The SHA-256 hash values next to each script are provided for integrity verifica
 
 ## Python
 
-- [hello.py](_script/hello.py) `8297cc013b88d974a7dce624c8a9c5b8bd31ed8f72ef4e03689c9c842566b24b`
+- [hello.py](script/hello.py) `8297cc013b88d974a7dce624c8a9c5b8bd31ed8f72ef4e03689c9c842566b24b`
 
   Linux:
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/hello.py" | python
+  curl -sSL "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/hello.py" | python
   ```
 
   Windows:
 
   ```
-  irm "https://edoardotosin.com/tools/hello.py" | python
+  irm "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/hello.py" | python
   ```
 
 ## Linux
 
-- [caddy-setup.sh](_script/caddy-setup.sh) `e307e5f27c23b83dcff786649e36c6cb741a42fd001cd7c31b782ebab8ae8f40`
+- [caddy-setup.sh](script/caddy-setup.sh) `e307e5f27c23b83dcff786649e36c6cb741a42fd001cd7c31b782ebab8ae8f40`
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/caddy-setup.sh" | sh
+  curl -sSL "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/caddy-setup.sh" | sh
   ```
 
-- [docker-setup.sh](_script/docker-setup.sh) `744c31273792ca8914c219d86e0dfb9f162add4d2f1d6d486d91803b4b51cdb9`
+- [docker-setup.sh](script/docker-setup.sh) `68596f1fdeb0c52f2e1b9f8003c58e13559c09398d8e55b05977a02edfc51896`
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/docker-setup.sh" | sudo sh
+  curl -sSL "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/docker-setup.sh" | sh
   ```
 
-- [hello.sh](_script/hello.sh) `cf61cd30778b31922289ef78283a54b280021e46a4b9ff105a8f69fa4c077827`
+- [hello.sh](script/hello.sh) `cf61cd30778b31922289ef78283a54b280021e46a4b9ff105a8f69fa4c077827`
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/hello.sh" | sh
+  curl -sSL "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/hello.sh" | sh
   ```
 
-- [picamera-noir-setup.sh](_script/picamera-noir-setup.sh) `48d73dad315b8a21159fba5eb83b3ece25727e113568ef09fedcd0ce10b10d5b`
+- [picamera-noir-setup.sh](script/picamera-noir-setup.sh) `48d73dad315b8a21159fba5eb83b3ece25727e113568ef09fedcd0ce10b10d5b`
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/picamera-noir-setup.sh" | sh
+  curl -sSL "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/picamera-noir-setup.sh" | sh
   ```
 
-- [shiori-setup.sh](_script/shiori-setup.sh) `082e97949b307368ea9b7d901c2cdd7f0289276f0d22f3a79833ae786a38a038`
+- [shiori-setup.sh](script/shiori-setup.sh) `082e97949b307368ea9b7d901c2cdd7f0289276f0d22f3a79833ae786a38a038`
 
   ```
-  curl -sSL "https://edoardotosin.com/tools/shiori-setup.sh" | sudo sh
+  curl -sSL "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/shiori-setup.sh" | sudo sh
   ```
 
 ## Windows
 
-- [hello.ps1](_script/hello.ps1) `a973a6a853d84bc63075e52a8f29b6fb96b84c91a64c2ba1c147d081c8f89061`
+- [hello.ps1](script/hello.ps1) `a973a6a853d84bc63075e52a8f29b6fb96b84c91a64c2ba1c147d081c8f89061`
 
   ```
-  irm "https://edoardotosin.com/tools/hello.ps1" | iex
+  irm "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/hello.ps1" | iex
   ```
 
-- [winfetch.ps1](_script/winfetch.ps1) `b7fb2b0081e6333de1316ad4c36a53f0378cadaab9b9467da61bc51a8222e63e`
+- [winfetch.ps1](script/winfetch.ps1) `b7fb2b0081e6333de1316ad4c36a53f0378cadaab9b9467da61bc51a8222e63e`
 
   ```
-  irm "https://edoardotosin.com/tools/winfetch.ps1" | iex
+  irm "https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script/winfetch.ps1" | iex
   ```
 

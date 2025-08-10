@@ -5,7 +5,7 @@
   root: "false"
 - name: "docker-setup.sh"
   type: "linux"
-  root: "true"
+  root: "false"
 - name: "hello.ps1"
   type: "windows"
   root: "false"
