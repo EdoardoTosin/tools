@@ -1,180 +1,180 @@
 require 'yaml'
 require 'fileutils'
 require 'digest'
+require 'pathname'
 
 module Jekyll
   class ScriptManagerGenerator < Generator
     safe true
 
-    DEFAULT_SCRIPT_DIR = 'script'
-    DEFAULT_SCRIPT_YML = '_data/script.yml'
-    SCRIPT_CATALOG_MD = 'SCRIPT_CATALOG.md'
-    GITHUB_RAW_BASE_URL = 'https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script'
-    SCRIPT_EXTENSIONS = {
-      '.sh' => 'linux',
+    DEFAULT_SCRIPT_DIR   = 'script'
+    DEFAULT_SCRIPT_YML   = '_data/script.yml'
+    SCRIPT_CATALOG_MD    = 'SCRIPT_CATALOG.md'
+    GITHUB_RAW_BASE_URL  = 'https://raw.githubusercontent.com/EdoardoTosin/tools/refs/heads/main/script'
+    SCRIPT_EXTENSIONS    = {
+      '.sh'   => 'linux',
       '.bash' => 'linux',
-      '.py' => 'python',
-      '.pyw' => 'python',
-      '.ps1' => 'windows'
-    }
+      '.py'   => 'python',
+      '.pyw'  => 'python',
+      '.ps1'  => 'windows'
+    }.freeze
     ROOT_PERMISSION_SUBSTRING = "Note: The script must run with root permissions."
 
-    @@last_run_time = Time.now
+    # class-level last run timestamp (initialized when the class is loaded)
+    @last_run_time = Time.now
+    class << self
+      attr_accessor :last_run_time
+    end
 
     def generate(site)
-      script_dir = File.join(site.source, DEFAULT_SCRIPT_DIR)
+      script_dir      = File.join(site.source, DEFAULT_SCRIPT_DIR)
       script_yml_path = File.join(site.source, DEFAULT_SCRIPT_YML)
-      md_path = File.join(site.source, SCRIPT_CATALOG_MD)
+      md_path         = File.join(site.source, SCRIPT_CATALOG_MD)
 
       ensure_directory_exists(script_dir)
 
-      # Check if files are missing or if the source has changed
       if files_missing?(script_yml_path, md_path) || source_changed?(script_dir)
-        # Retrieve all script files
         scripts = find_scripts(script_dir)
+        metadata = scripts.sort.map { |f| build_metadata(f, site) }
 
-        # Generate files
-        generate_script_yaml(script_yml_path, scripts)
-        generate_script_catalog_md(md_path, scripts, site)
+        generate_script_yaml(script_yml_path, metadata)
+        generate_script_catalog_md(md_path, metadata, site)
 
-        @@last_run_time = Time.now
-        Jekyll.logger.info "ScriptManagerGenerator:", "Generated #{script_yml_path} and #{md_path} with #{scripts.size} scripts."
+        self.class.last_run_time = Time.now
+        Jekyll.logger.info "ScriptManagerGenerator:", "Generated #{script_yml_path} and #{md_path} with #{metadata.size} scripts."
       else
         Jekyll.logger.info "ScriptManagerGenerator:", "No changes detected. Skipping generation."
       end
+    rescue => e
+      Jekyll.logger.error "ScriptManagerGenerator:", "Failed to generate script catalog: #{e.class}: #{e.message}"
+      Jekyll.logger.debug e.backtrace.join("\n")
     end
 
     private
 
-    # Check if either of the target files is missing
+    # --- file checks --------------------------------------------------------
     def files_missing?(*files)
       files.any? { |file| !File.exist?(file) }
     end
 
-    # Check if the source directory has changed since the last run
+    # only consider script files when checking for changes
     def source_changed?(script_dir)
-      Dir.glob(File.join(script_dir, '**/*')).any? do |file|
-        File.mtime(file) > @@last_run_time
+      return true unless Dir.exist?(script_dir)
+
+      script_files = Dir.glob(File.join(script_dir, '**', '*')).select do |p|
+        File.file?(p) && SCRIPT_EXTENSIONS.key?(File.extname(p).downcase)
+      end
+
+      script_files.any? { |file| File.mtime(file) > self.class.last_run_time }
+    end
+
+    # --- discovery & metadata ----------------------------------------------
+    def find_scripts(script_dir)
+      return [] unless Dir.exist?(script_dir)
+
+      Dir.glob(File.join(script_dir, '**', '*')).select do |file|
+        File.file?(file) && SCRIPT_EXTENSIONS.key?(File.extname(file).downcase)
       end
     end
 
-    # Generate _data/script.yml
-    def generate_script_yaml(path, scripts)
-      script_data = scripts.map do |file|
-        {
-          'name' => File.basename(file),
-          'type' => SCRIPT_EXTENSIONS[File.extname(file)],
-          'root' => script_requires_root?(file)
-        }
-      end
-
-      write_yaml(path, script_data)
+    # read the file once and compute metadata (hash, root flag, ext, relative path)
+    def build_metadata(file, site)
+      content = File.binread(file) rescue ''
+      ext     = File.extname(file).downcase
+      {
+        name:         File.basename(file),
+        path:         file,
+        relative_path: Pathname.new(file).relative_path_from(Pathname.new(site.source)).to_s,
+        ext:          ext,
+        type:         SCRIPT_EXTENSIONS[ext],
+        root:         content.include?(ROOT_PERMISSION_SUBSTRING),
+        hash:         Digest::SHA256.hexdigest(content)
+      }
     end
 
-    def write_yaml(path, data)
-      File.open(path, 'w') do |file|
-        file.puts "# Script Catalog"
-        file.puts ""
-        data.each do |script|
-          file.puts "- name: \"#{script['name']}\""
-          file.puts "  type: \"#{script['type']}\""
-          file.puts "  root: \"#{script['root'] ? 'true' : 'false'}\""
+    # --- YAML output (keeps original formatting) ----------------------------
+    def generate_script_yaml(path, metadata)
+      File.open(path, 'w') do |f|
+        f.puts "# Script Catalog"
+        f.puts ""
+        metadata.each do |m|
+          f.puts "- name: \"#{m[:name]}\""
+          f.puts "  type: \"#{m[:type]}\""
+          f.puts "  root: \"#{m[:root] ? 'true' : 'false'}\""
         end
       end
     rescue IOError => e
       Jekyll.logger.error "ScriptManagerGenerator:", "Failed to write YAML file: #{e.message}"
     end
 
-    # Generate SCRIPT_CATALOG.md
-    def generate_script_catalog_md(path, scripts, site)
-      python_scripts, linux_scripts, windows_scripts = categorize_scripts(scripts)
+    # --- Markdown output ---------------------------------------------------
+    def generate_script_catalog_md(path, metadata, site)
+      by_type = metadata.group_by { |m| m[:type] }
 
-      # Main title with explanation of SHA-256 integrity checks
-      content = "# Script Catalog\n\n"
-      content += "_The SHA-256 hash values next to each script are provided for integrity verification._\n\n"
+      python_scripts  = (by_type['python'] || []).sort_by { |m| m[:name].downcase }
+      linux_scripts   = (by_type['linux']  || []).sort_by { |m| m[:name].downcase }
+      windows_scripts = (by_type['windows']|| []).sort_by { |m| m[:name].downcase }
 
-      content += generate_section("Python", python_scripts, site) unless python_scripts.empty?
-      content += generate_section("Linux", linux_scripts, site, true) unless linux_scripts.empty?
-      content += generate_section("Windows", windows_scripts, site) unless windows_scripts.empty?
+      lines = []
+      lines << "# Script Catalog"
+      lines << ""
+      lines << "_The SHA-256 hash values next to each script are provided for integrity verification._"
+      lines << ""
 
-      File.open(path, 'w') { |file| file.write(content) }
+      lines.concat section_lines("Python", python_scripts, site) unless python_scripts.empty?
+      lines.concat section_lines("Linux",  linux_scripts,  site, check_sudo: true) unless linux_scripts.empty?
+      lines.concat section_lines("Windows", windows_scripts, site) unless windows_scripts.empty?
+
+      File.write(path, lines.join("\n") + "\n")
     rescue IOError => e
       Jekyll.logger.error "ScriptManagerGenerator:", "Failed to write Markdown file: #{e.message}"
     end
 
-    # Categorize scripts by type
-    def categorize_scripts(scripts)
-      python_scripts = []
-      linux_scripts = []
-      windows_scripts = []
+    def section_lines(title, scripts, site, check_sudo: false)
+      lines = []
+      lines << "## #{title}"
+      lines << ""
+      scripts.each do |m|
+        github_raw_url = "#{GITHUB_RAW_BASE_URL}/#{m[:name]}"
+        lines << "- [#{m[:name]}](#{m[:relative_path]}) `#{m[:hash]}`"
+        lines << ""
 
-      scripts.each do |script|
-        case File.extname(script)
-        when '.py', '.pyw'
-          python_scripts << script
-        when '.bash', '.sh'
-          linux_scripts << script
-        when '.ps1'
-          windows_scripts << script
+        case title
+        when "Python"
+          lines << "  Linux:"
+          lines << ""
+          lines << "  ```"
+          lines << "  curl -sSL \"#{github_raw_url}\" | python"
+          lines << "  ```"
+          lines << ""
+          lines << "  Windows:"
+          lines << ""
+          lines << "  ```"
+          lines << "  irm \"#{github_raw_url}\" | python"
+          lines << "  ```"
+          lines << ""
+        when "Linux"
+          lines << "  ```"
+          use_sudo = check_sudo && m[:root]
+          cmd = "  curl -sSL \"#{github_raw_url}\""
+          cmd += use_sudo ? " | sudo " : " | "
+          cmd += (m[:ext] == '.bash' ? 'bash' : 'sh')
+          lines << cmd
+          lines << "  ```"
+          lines << ""
+        when "Windows"
+          lines << "  ```"
+          lines << "  irm \"#{github_raw_url}\" | iex"
+          lines << "  ```"
+          lines << ""
         end
       end
-
-      [python_scripts, linux_scripts, windows_scripts]
+      lines
     end
 
-    # Generate content for each script section
-    def generate_section(title, scripts, site, check_sudo = false)
-      content = "## #{title}\n\n"
-      scripts.each do |script|
-        script_name = File.basename(script)
-        # Get the relative path of the script file from the script directory
-        relative_path = Pathname.new(script).relative_path_from(Pathname.new(site.source)).to_s
-        # Compute SHA-256 hash of the script
-        hash = compute_file_hash(script)
-        # Generate GitHub raw URL for the script
-        github_raw_url = "#{GITHUB_RAW_BASE_URL}/#{script_name}"
-
-        content += "- [#{script_name}](#{relative_path}) `#{hash}`\n\n"
-
-        if title == "Python"
-          content += "  Linux:\n\n  ```\n"
-          content += "  curl -sSL \"#{github_raw_url}\" | python\n"
-          content += "  ```\n\n"
-          content += "  Windows:\n\n  ```\n"
-          content += "  irm \"#{github_raw_url}\" | python\n"
-          content += "  ```\n\n"
-        elsif title == "Linux"
-          content += "  ```\n"
-          use_sudo = check_sudo && script_requires_root?(script)
-          content += "  curl -sSL \"#{github_raw_url}\""
-          content += use_sudo ? " | sudo " : " | "
-          content += (File.extname(script) == '.bash' ? "bash" : "sh") + "\n"
-          content += "  ```\n\n"
-        elsif title == "Windows"
-          content += "  ```\n"
-          content += "  irm \"#{github_raw_url}\" | iex\n"
-          content += "  ```\n\n"
-        end
-      end
-      content
-    end
-
-    # Compute SHA-256 hash for a file
-    def compute_file_hash(file)
-      Digest::SHA256.file(file).hexdigest
-    end
-
-    # Utility methods
-    def script_requires_root?(file)
-      File.foreach(file).any? { |line| line.include?(ROOT_PERMISSION_SUBSTRING) }
-    end
-
+    # --- utilities --------------------------------------------------------
     def ensure_directory_exists(dir)
       FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
-    end
-
-    def find_scripts(script_dir)
-      Dir.glob(File.join(script_dir, '**/*')).select { |file| SCRIPT_EXTENSIONS.key?(File.extname(file)) }
     end
   end
 end
