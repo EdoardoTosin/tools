@@ -122,7 +122,7 @@ exclude:
   - debug.yml
   - debug.sh
   - docker-compose.yml
-  - script/
+  - script
   - SCRIPT_CATALOG.md
   - Dockerfile
   - docker-compose.yml
