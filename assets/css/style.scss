@@ -47,7 +47,6 @@ button.tools:hover {
 
 .searchbar:focus-within {
   border: 2px solid var(--color-border-dark);
-  transition: border-color 0.3s ease;
 }
 
 ::placeholder {
