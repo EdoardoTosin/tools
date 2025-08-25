@@ -45,6 +45,11 @@ button.tools:hover {
   transition: border-color 0.3s ease;
 }
 
+.searchbar:focus-within {
+  border: 2px solid var(--color-border-dark);
+  transition: border-color 0.3s ease;
+}
+
 ::placeholder {
   color: var(--text-main);
   opacity: 0.5; /* Firefox */
