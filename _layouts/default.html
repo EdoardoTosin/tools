@@ -1,123 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta content="{{ page.title }}" property="og:site_name" />
-	{%- if page.description -%}
-	<meta content="{{ page.description }}" property="og:description" name="description">
-	{%- else -%}
-	<meta content="{{ site.content }}" property="og:tagline" name="tagline">
-	<meta content="{{ site.description | strip_html | xml_escape | truncate: 200 }}" property="og:description" name="description">
-	{%- endif -%}
-    {%- if page.keywords -%}
-    <meta content="{{ page.keywords }}" property="keywords">
-    {%- elsif site.keywords -%}
-    <meta content="{{ site.keywords }}" property="keywords">
-    {%- else -%}
-    {%- endif -%}
-	{%- if page.author -%}
-	<meta content="{{ page.author }}" property="article:author">
-	{%- elsif site.author -%}
-	<meta content="{{ site.author }}" property="article:author">
-	{%- else -%}
-	<meta content="{{ site.domain_url }}/about" property="article:author">
-	{%- endif -%}
-	{%- if page.ogimg -%}
-	<meta property="og:image" content="{{ page.ogimg }}">
-	<link rel="image_src" href="{{ page.ogimg }}">
-	{%- else -%}
-	<meta property="og:image" content="{{ site.domain_url }}{{ site.ogimg }}">
-	<link rel="image_src" href="{{ site.domain_url }}{{ site.ogimg }}">
-	{%- endif -%}
-	{%- if page.title -%}
-	<meta content="{{ page.title }}" property="og:title">
-	<meta content="article" property="og:type">
-	<meta content="{{ page.url | absolute_url }}" property="og:url">
-	{%- else -%}
-	<meta content="website" property="og:type">
-	<meta content="{{ page.url | absolute_url }}" property="og:url">
-	{%- endif -%}
-	<!-- Datetime -->
-	{%- include DatetimeMeta.html -%}
-	
-	{%- if page.noindex -%}
-	<!-- Indexing rules -->
-	{%- if page.noindex == "follow" -%}
-	<meta name="robots" content="noindex">
-	{%- elsif page.noindex == "nofollow" -%}
-	<meta name="robots" content="noindex, nofollow">
-	{%- endif -%}
-	{%- endif -%}
-	
-	<!-- Title -->
-	{%- if page.permalink == '/' and page.title -%}
-	<title>{{site.heading}} - {{page.title}}</title>
-	{%- elsif page.title -%}
-	<title>{{page.title}} - {{site.heading}}</title>
-	{%- elsif page.permalink == '/404.html' -%}
-	<title>There's been a glitch...</title>
-	{%- else -%}
-	{%- endif -%}
-	
-	{% assign redirect_url = '' %}
-	{%- if page.redirect and page.redirect != '' -%}
-	{% assign redirect_url = page.redirect %}
-	{% assign redirect_url = redirect_url | strip %}
-	{% assign first_char = redirect_url | slice: 0 | strip %}
-	{%- if first_char == "/" -%}
-	{%- if page.redirect_domain and page.redirect_domain != '' -%}
-	{% assign redirect_url = redirect_url | prepend: page.redirect_domain %}
-	{%- else -%}
-	{% assign redirect_url = redirect_url | prepend: site.domain_url %}
-	{%- endif -%}
-	{%- endif -%}
-	<!-- Permanent redirect -->
-	<meta http-equiv="refresh" content="0; url={{ redirect_url }}">
-	<link rel="canonical" href="{{ redirect_url }}" />
-	{%- else -%}
-	<link rel="canonical" href="{{site.domain_url}}{{site.baseurl}}" />
-	{%- endif -%}
-	
+	{%- include Meta.html -%}
+
 	<!-- Favicon -->
 	<link rel="apple-touch-icon" href="{{ site.domain_url }}/assets/img/apple-touch-icon.png">
 	<link rel="icon" href="{{ site.domain_url }}/assets/img/favicon.png" type="image/png" sizes="48x48" />
 	<!-- Style -->
 	<link href="{{ site.domain_url }}/assets/css/style.css" rel="stylesheet" media="all" class="default" />
 	<link href="{{ site.domain_url }}/assets/css/main.css" rel="stylesheet" media="all" class="default" />
+	<link href="{{ site.domain_url }}/assets/css/main-override.css" rel="stylesheet" media="all" class="default" />
 	<link href="{{ site.domain_url }}/assets/css/Util.css" rel="stylesheet" media="all" class="default" />
 	<link href="{{ site.domain_url }}/assets/css/vendor/Katex.css" rel="stylesheet" media="all" class="default" />
-	
-	<!-- Twitter -->
-	<meta name="twitter:card" content="summary_large_image">
-	{%- if site.twitter -%}
-	<meta name="twitter:site" content="@{{ site.twitter }}">
-	<meta name="twitter:creator" content="@{{ site.twitter }}">
-	{%- endif -%}
-	{%- if page.title -%}
-	<meta name="twitter:title" content="{{ page.title }}">
-	{% else %}
-	<meta name="twitter:title" content="{{ site.heading }}">
-	{%- endif -%}
-	{% assign page_content = page.content | strip_html | xml_escape | truncate: 180 %}
-	{% if page.description %}
-	<meta name="twitter:description" content="{{ page.description }}">
-	{% elsif page_content.size > 50 %}
-	<meta name="twitter:description" content="{{ page_content }}">
-	{% else %}
-	<meta name="twitter:description" content="{{ site.description | strip_html | xml_escape | truncate: 180 }}">
-	{% endif %}
-	{%- if page.ogimg -%}
-	<meta property="twitter:image" content="{{ page.ogimg }}">
-	{%- else -%}
-	<meta property="twitter:image" content="{{ site.domain_url }}{{ site.ogimg }}">
-	{%- endif -%}
-
-	{%- if site.link and site.link.mastodon -%}
-		{% for mastodon_link in site.link.mastodon %}
-			<link rel="me" href="{{ mastodon_link }}">
-		{% endfor %}
-	{%- endif -%}
 </head>
 <body class="tools">
 	<main class="tools">

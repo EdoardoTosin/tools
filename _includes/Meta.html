@@ -1,0 +1,102 @@
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta content="{{ page.title }}" property="og:site_name" />
+{%- if page.description -%}
+<meta content="{{ page.description }}" property="og:description" name="description">
+{%- else -%}
+<meta content="{{ site.content }}" property="og:tagline" name="tagline">
+<meta content="{{ site.description | strip_html | xml_escape | truncate: 200 }}" property="og:description" name="description">
+{%- endif -%}
+{%- if page.keywords -%}
+<meta content="{{ page.keywords }}" property="keywords">
+{%- elsif site.keywords -%}
+<meta content="{{ site.keywords }}" property="keywords">
+{%- else -%}
+{%- endif -%}
+{%- if page.author -%}
+<meta content="{{ page.author }}" property="article:author">
+{%- elsif site.author -%}
+<meta content="{{ site.author }}" property="article:author">
+{%- else -%}
+<meta content="{{ site.domain_url }}/about" property="article:author">
+{%- endif -%}
+{%- if page.ogimg -%}
+<meta property="og:image" content="{{ page.ogimg }}">
+<link rel="image_src" href="{{ page.ogimg }}">
+{%- else -%}
+<meta property="og:image" content="{{ site.domain_url }}{{ site.ogimg }}">
+<link rel="image_src" href="{{ site.domain_url }}{{ site.ogimg }}">
+{%- endif -%}
+{%- if page.title -%}
+<meta content="{{ page.title }}" property="og:title">
+<meta content="article" property="og:type">
+<meta content="{{ site.url }}{{ page.url }}" property="og:url">
+{%- else -%}
+<meta content="website" property="og:type">
+<meta content="{{ site.url }}{{ page.url }}" property="og:url">
+{%- endif -%}
+<!-- Datetime -->
+{%- include DatetimeMeta.html -%}
+
+{%- if page.noindex -%}
+<!-- Indexing rules -->
+{%- if page.noindex == "follow" -%}
+<meta name="robots" content="noindex">
+{%- elsif page.noindex == "nofollow" -%}
+<meta name="robots" content="noindex, nofollow">
+{%- endif -%}
+{%- endif -%}
+
+<!-- Title -->
+{%- if page.permalink == '/' and page.title -%}
+<title>{{site.heading}} - {{page.title}}</title>
+{%- elsif page.title -%}
+<title>{{page.title}} - {{site.heading}}</title>
+{%- elsif page.permalink == '/404.html' -%}
+<title>There's been a glitch...</title>
+{%- else -%}
+{%- endif -%}
+
+{%- assign redirect_url = page.redirect | default: '' | strip -%}
+{%- if redirect_url != '' -%}
+    {%- if redirect_url contains "://" -%}
+        <!-- Absolute URL -->
+    {%- else -%}
+        {%- assign redirect_url = redirect_url | prepend: site.domain_url -%}
+    {%- endif -%}
+    <!-- Permanent redirect -->
+    <meta http-equiv="refresh" content="0; url={{ redirect_url }}">
+    <link rel="canonical" href="{{ redirect_url }}" />
+{%- else -%}
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
+{%- endif -%}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+{%- if site.twitter -%}
+<meta name="twitter:site" content="@{{ site.twitter }}">
+<meta name="twitter:creator" content="@{{ site.twitter }}">
+{%- endif -%}
+{%- if page.title -%}
+<meta name="twitter:title" content="{{ page.title }}">
+{% else %}
+<meta name="twitter:title" content="{{ site.heading }}">
+{%- endif -%}
+{% assign page_content = page.content | strip_html | xml_escape | truncate: 180 %}
+{% if page.description %}
+<meta name="twitter:description" content="{{ page.description }}">
+{% elsif page_content.size > 50 %}
+<meta name="twitter:description" content="{{ page_content }}">
+{% else %}
+<meta name="twitter:description" content="{{ site.description | strip_html | xml_escape | truncate: 180 }}">
+{% endif %}
+{%- if page.ogimg -%}
+<meta property="twitter:image" content="{{ page.ogimg }}">
+{%- else -%}
+<meta property="twitter:image" content="{{ site.domain_url }}{{ site.ogimg }}">
+{%- endif -%}
+
+{%- if site.link and site.link.mastodon -%}
+    {% for mastodon_link in site.link.mastodon %}
+        <link rel="me" href="{{ mastodon_link }}">
+    {% endfor %}
+{%- endif -%}
