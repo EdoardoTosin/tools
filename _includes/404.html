@@ -1,0 +1,79 @@
+<p class="disable-select has-text-centered">
+  <img id="error-404" src="{{ site.domain_url }}/assets/img/404.gif" alt="Error 404">
+</p>
+
+<div class="has-text-centered">
+  <h2 class="title is-3">Oops! Page Not Found</h2>
+  <p class="subtitle is-5">The page you were looking for doesn't exist or may have been moved.</p>
+  <p class="subtitle is-6 margin-top-20">
+    Don't worry - here's a random page you might enjoy instead:
+  </p>
+</div>
+
+<div id="random-suggestion" class="section">
+  <div class="container">
+    <div id="loading" class="has-text-centered">
+      <p class="subtitle">Loading a random page for you...</p>
+    </div>
+    <div id="suggestion" style="display: none;">
+      <div class="notelist-feed">
+        <a id="random-link" style="text-decoration: none;" href="#">
+          <h6 id="random-title"></h6>
+          <p id="random-description" class="excerpt"></p>
+        </a>
+      </div>
+      <div class="buttons is-centered margin-top-20">
+        <button id="random-button" class="button is-light is-medium">
+          <span>Try Another</span>
+        </button>
+        <a href="{{ site.domain_url }}/" class="button is-primary is-medium no-external-link-icon" style="text-decoration: none;">
+          <span>Go to Homepage</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var searchData = null;
+
+  function loadSearchData() {
+    fetch('{{ site.domain_url }}/SearchData.json')
+      .then(function(response) { return response.json(); })
+      .then(function(data) {
+        searchData = data;
+        getRandomPage();
+      })
+      .catch(function() {
+        document.getElementById('loading').innerHTML = '<p class="subtitle">Sorry, unable to load suggestions.</p>';
+      });
+  }
+
+  function getRandomPage() {
+    if (!searchData) return;
+
+    var keys = Object.keys(searchData);
+    if (keys.length === 0) return;
+
+    var randomPage = searchData[keys[Math.floor(Math.random() * keys.length)]];
+
+    document.getElementById('random-title').textContent = randomPage.title || 'Untitled';
+    document.getElementById('random-description').textContent =
+      randomPage.description ||
+      (randomPage.content ? randomPage.content.substring(0, 150) + '...' : 'No description available');
+    document.getElementById('random-link').href = randomPage.url || '#';
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('suggestion').style.display = 'block';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    loadSearchData();
+    document.getElementById('random-button').addEventListener('click', function() {
+      getRandomPage();
+      this.blur();
+    });
+  });
+})();
+</script>
