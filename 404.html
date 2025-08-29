@@ -30,6 +30,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="" property="og:site_name">
     <meta content="Error 404 - Page not found" property="og:description" name="description">
+    <meta content="computer science, programming, software development, tech blog, coding projects, cybersecurity, data science, machine learning, developer portfolio, code tutorials, personal blog, technology insights, digital experiments, open source, developer notes, coding journey, tech exploration" property="keywords">
     <meta content="Edoardo Tosin" property="article:author">
     <meta property="og:image" content="https://edoardotosin.com/assets/img/OGImg.jpg">
     <link rel="image_src" href="https://edoardotosin.com/assets/img/OGImg.jpg">
@@ -41,15 +42,6 @@
     <!-- Title -->
     <title>There's been a glitch...</title>
     <link rel="canonical" href="https://edoardotosin.com/tools/404.html">
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" href="https://edoardotosin.com/assets/img/apple-touch-icon.png">
-    <link rel="icon" href="https://edoardotosin.com/assets/img/favicon.png" type="image/png" sizes="48x48">
-    <!-- Style -->
-    <link href="https://edoardotosin.com/assets/css/style.css" rel="stylesheet" media="all" class="default">
-    <link href="https://edoardotosin.com/assets/css/main.css" rel="stylesheet" media="all" class="default">
-    <link href="https://edoardotosin.com/assets/css/Util.css" rel="stylesheet" media="all" class="default">
-    <link href="https://edoardotosin.com/assets/css/vendor/Katex.css" rel="stylesheet" media="all" class="default">
-
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@EdoardoTosin">
@@ -61,6 +53,16 @@
     <link rel="me" href="https://mastodon.social/@edoardotosin">
 
     <link rel="me" href="https://infosec.exchange/@EdoardoTosin">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" href="https://edoardotosin.com/assets/img/apple-touch-icon.png">
+    <link rel="icon" href="https://edoardotosin.com/assets/img/favicon.png" type="image/png" sizes="48x48">
+    <!-- Style -->
+    <link href="https://edoardotosin.com/assets/css/style.css" rel="stylesheet" media="all" class="default">
+    <link href="https://edoardotosin.com/assets/css/main.css" rel="stylesheet" media="all" class="default">
+    <link href="https://edoardotosin.com/assets/css/main-override.css" rel="stylesheet" media="all" class="default">
+    <link href="https://edoardotosin.com/assets/css/Util.css" rel="stylesheet" media="all" class="default">
+    <link href="https://edoardotosin.com/assets/css/vendor/Katex.css" rel="stylesheet" media="all" class="default">
+
     <!--[if IE]>
         <link href="https://edoardotosin.com/assets/css/ie-target.css" rel="stylesheet" type="text/css"/>
     <![endif]-->
@@ -82,7 +84,7 @@
                     <div class="buttons">
                         <a class="button is-text">
                             <span class="icon is-small">
-              <img src="https://edoardotosin.com/assets/img/sun.svg" id="theme-toggle-img--mobile">
+              <img src="https://edoardotosin.com/assets/img/sun.svg" id="theme-toggle-img--mobile" alt="Theme Button">
             </span>
                         </a>
                     </div>
@@ -121,7 +123,7 @@
                         <div class="buttons">
                             <a class="button is-text">
                                 <span class="icon is-small">
-                <img src="https://edoardotosin.com/assets/img/sun.svg" id="theme-toggle-img">
+                <img src="https://edoardotosin.com/assets/img/sun.svg" id="theme-toggle-img" alt="Theme Button">
               </span>
                             </a>
                         </div>
@@ -136,16 +138,11 @@
             <div class="columns is-centered">
 
                 <!-- Homepage Layout-->
-                <!--- Notes Feed Layout-->
-                <!--- Notes Layout-->
-                <!--- Post Feed Layout-->
-                <!--- Post Layout-->
-                <!--- Static Page Layout-->
-                <div class="column is-5-widescreen  is-6-desktop is-8-tablet is-12-mobile">
+                <div class="column is-5-widescreen is-6-desktop is-8-tablet is-12-mobile">
                     <div class="jumbo"></div>
                     <!-- Parse internal links, external links, transclusions etc and manipuate the content to reflect it accordingly -->
                     <div class="content">
-                        <p align="center"><img id="error-404" src="https://edoardotosin.com/assets/img/404.gif" alt="Error 404"></p>
+                        <p class="disable-select" align="center"><img id="error-404" src="https://edoardotosin.com/assets/img/404.gif" alt="Error 404"></p>
                     </div>
                 </div>
             </div>
@@ -169,16 +166,21 @@
             </p>
         </div>
         <!-- Lightbox2 -->
-        <script src="https://edoardotosin.com/assets/js/lightbox-plus-jquery.min.js"></script>
-        <link rel="stylesheet" href="https://edoardotosin.com/assets/css/lightbox.min.css">
+        <link rel="preload" href="https://edoardotosin.com/assets/css/lightbox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload" href="https://edoardotosin.com/assets/css/lightbox-override.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <script src="https://edoardotosin.com/assets/js/lightbox-plus-jquery.min.js" defer></script>
         <script>
-            lightbox.option({
-                'alwaysShowNavOnTouchDevices': true,
-                'disableScrolling': true,
-                'fadeDuration': 400,
-                'imageFadeDuration': 400,
-                'resizeDuration': 400
-            })
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof lightbox !== 'undefined') {
+                    lightbox.option({
+                        'alwaysShowNavOnTouchDevices': true,
+                        'disableScrolling': true,
+                        'fadeDuration': 400,
+                        'imageFadeDuration': 400,
+                        'resizeDuration': 400
+                    });
+                }
+            });
         </script>
 
     </main>
