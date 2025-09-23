@@ -29,7 +29,7 @@
 {%- endcomment -%}
 
 <p class="disable-select has-text-centered">
-  <img id="error-404" src="{{ site.domain_url }}/assets/img/404.gif" alt="Error 404">
+  <img id="error-404" src="{{ site.domain_url }}/assets/img/404.gif" alt="Error 404" aria-label="Page not found error image">
 </p>
 
 <div class="has-text-centered">
@@ -47,16 +47,16 @@
     </div>
     <div id="suggestion" style="display: none;">
       <div class="notelist-feed">
-        <a id="random-link" style="text-decoration: none;" href="#">
+        <a id="random-link" style="text-decoration: none;" href="#" aria-label="Random page suggestion">
           <h6 id="random-title"></h6>
           <p id="random-description" class="excerpt"></p>
         </a>
       </div>
       <div class="buttons is-centered margin-top-20">
-        <button id="random-button" class="button is-warning is-medium has-text-black">
+        <button id="random-button" class="button is-warning is-medium has-text-black" aria-label="Try another random page">
           <span>Try Another</span>
         </button>
-        <a href="{{ site.domain_url }}/" class="button is-link is-medium has-text-white no-external-link-icon" style="text-decoration: none;">
+        <a href="{{ site.domain_url }}/" class="button is-link is-medium has-text-white no-external-link-icon" style="text-decoration: none;" aria-label="Go to homepage">
           <span>Go to Homepage</span>
         </a>
       </div>

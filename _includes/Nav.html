@@ -36,7 +36,7 @@
           <h6> {{site.heading}}</h6></a>
           <script src="{{ site.domain_url }}/assets/js/modeswitcher.js"></script>
           <script src="{{ site.domain_url }}/assets/js/Hamburger.js"></script>
-      <div class="navbar-item navbar-dark-mode__mobile is-hidden-tablet" onclick="modeSwitcher()">
+      <div class="navbar-item navbar-dark-mode__mobile is-hidden-tablet" onclick="modeSwitcher()" aria-label="Toggle dark/light mode">
         <div class="buttons">
           <a class="button is-text">
             <span class="icon is-small">
@@ -45,14 +45,14 @@
           </a>
         </div>
       </div>
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <a role="button" class="navbar-burger" aria-label="Open main menu" aria-expanded="false" data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu no-print">
+    <div id="navbarBasicExample" class="navbar-menu no-print" role="menubar">
       <div class="navbar-start">
         <a href="{{ site.domain_url }}/about"  target="_self" class="navbar-item" title="About">
           About
@@ -77,7 +77,7 @@
         </a>
       </div>
 	  <div class="navbar-item"></div>
-      <div class="navbar-end is-hidden-mobile" onclick="modeSwitcher()" >
+      <div class="navbar-end is-hidden-mobile" onclick="modeSwitcher()" aria-label="Toggle dark/light mode">
         <div class="navbar-item">
           <div class="buttons">
             <a class="button is-text">
