@@ -1,5 +1,9 @@
 <meta content="width=device-width, initial-scale=1" name="viewport" />
+{%- if page.permalink == '/' -%}
+<meta content="{{ site.heading }} - {{ page.title }}" property="og:site_name" />
+{%- else -%}
 <meta content="{{ page.title }}" property="og:site_name" />
+{%- endif -%}
 {%- if page.description -%}
 <meta content="{{ page.description }}" property="og:description" name="description">
 {%- else -%}
@@ -27,7 +31,11 @@
 <link rel="image_src" href="{{ site.domain_url }}{{ site.ogimg }}">
 {%- endif -%}
 {%- if page.title -%}
+{%- if page.permalink == '/' -%}
+<meta content="{{ site.heading }} - {{ page.title }}" property="og:title">
+{%- else -%}
 <meta content="{{ page.title }}" property="og:title">
+{%- endif -%}
 <meta content="article" property="og:type">
 <meta content="{{ site.url }}{{ page.url }}" property="og:url">
 {%- else -%}
@@ -47,7 +55,7 @@
 {%- endif -%}
 
 <!-- Title -->
-{%- if page.permalink == '/' and page.title -%}
+{%- if page.permalink == '/' -%}
 <title>{{site.heading}} - {{page.title}}</title>
 {%- elsif page.title -%}
 <title>{{page.title}} - {{site.heading}}</title>
@@ -77,7 +85,11 @@
 <meta name="twitter:creator" content="@{{ site.twitter }}">
 {%- endif -%}
 {%- if page.title -%}
+{%- if page.permalink == '/' -%}
+<meta name="twitter:title" content="{{ site.heading }} - {{ page.title }}">
+{%- else -%}
 <meta name="twitter:title" content="{{ page.title }}">
+{%- endif -%}
 {% else %}
 <meta name="twitter:title" content="{{ site.heading }}">
 {%- endif -%}
