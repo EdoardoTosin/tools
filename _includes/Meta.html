@@ -1,21 +1,43 @@
 <meta content="width=device-width, initial-scale=1" name="viewport" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Open Graph locale -->
+{%- if page.lang -%}
+<meta property="og:locale" content="{{ page.lang | replace: '-', '_' }}" />
+{%- elsif site.lang -%}
+<meta property="og:locale" content="{{ site.lang | replace: '-', '_' }}" />
+{%- else -%}
+<meta property="og:locale" content="en_US" />
+{%- endif -%}
+
+<!-- Open Graph site name -->
 {%- if page.permalink == '/' -%}
+  {%- if page.title -%}
 <meta content="{{ site.heading }} - {{ page.title }}" property="og:site_name" />
+  {%- else -%}
+<meta content="{{ site.heading }}" property="og:site_name" />
+  {%- endif -%}
 {%- else -%}
 <meta content="{{ page.title }}" property="og:site_name" />
 {%- endif -%}
+
+<!-- Description -->
 {%- if page.description -%}
 <meta content="{{ page.description }}" property="og:description" name="description">
 {%- else -%}
 <meta content="{{ site.content }}" property="og:tagline" name="tagline">
 <meta content="{{ site.description | strip_html | xml_escape | truncate: 200 }}" property="og:description" name="description">
 {%- endif -%}
+
+<!-- Keywords -->
 {%- if page.keywords -%}
 <meta content="{{ page.keywords }}" property="keywords">
 {%- elsif site.keywords -%}
 <meta content="{{ site.keywords }}" property="keywords">
 {%- else -%}
 {%- endif -%}
+
+<!-- Author -->
 {%- if page.author -%}
 <meta content="{{ page.author }}" property="article:author">
 {%- elsif site.author -%}
@@ -23,6 +45,8 @@
 {%- else -%}
 <meta content="{{ site.domain_url }}/about" property="article:author">
 {%- endif -%}
+
+<!-- Open Graph Image -->
 {%- if page.ogimg -%}
 <meta property="og:image" content="{{ page.ogimg }}">
 <link rel="image_src" href="{{ page.ogimg }}">
@@ -30,6 +54,8 @@
 <meta property="og:image" content="{{ site.domain_url }}{{ site.ogimg }}">
 <link rel="image_src" href="{{ site.domain_url }}{{ site.ogimg }}">
 {%- endif -%}
+
+<!-- Open Graph Title and Type -->
 {%- if page.title -%}
 {%- if page.permalink == '/' -%}
 <meta content="{{ site.heading }} - {{ page.title }}" property="og:title">
@@ -37,13 +63,39 @@
 <meta content="{{ page.title }}" property="og:title">
 {%- endif -%}
 <meta content="article" property="og:type">
-<meta content="{{ site.url }}{{ page.url }}" property="og:url">
 {%- else -%}
-<meta content="website" property="og:type">
-<meta content="{{ site.url }}{{ page.url }}" property="og:url">
+{%- if page.permalink == '/' -%}
+<meta content="{{ site.heading }}" property="og:title">
 {%- endif -%}
-<!-- Datetime -->
-{%- include DatetimeMeta.html -%}
+<meta content="website" property="og:type">
+{%- endif -%}
+
+<!-- Open Graph URL -->
+<meta content="{{ page.url | absolute_url }}" property="og:url">
+
+<!-- Article metadata -->
+{%- if page.date -%}
+  {%- if page.last_modified_at and page.last_modified_at != page.date -%}
+    {% assign pub_date = page.date | date: "%Y-%m-%d" %}
+    {% assign upd_date = page.last_modified_at | date: "%Y-%m-%d" %}
+  {%- else -%}
+    {% assign upd_date = pub_date %}
+  {%- endif -%}
+<meta property="article:published_time" content="{{ page.date | date_offset: site.timezone | date_to_xmlschema }}">
+  {% if page.last_modified_at and page.last_modified_at != page.date and pub_date != upd_date %}
+<meta property="article:modified_time" content="{{ page.last_modified_at | date_offset: site.timezone | date_to_xmlschema }}">
+  {%- endif -%}
+{%- endif -%}
+{%- if page.categories -%}
+  {%- for category in page.categories -%}
+<meta property="article:section" content="{{ category }}" />
+  {%- endfor -%}
+{%- endif -%}
+{%- if page.tags -%}
+  {%- for tag in page.tags -%}
+<meta property="article:tag" content="{{ tag }}" />
+  {%- endfor -%}
+{%- endif -%}
 
 {%- if page.noindex -%}
 <!-- Indexing rules -->
@@ -56,7 +108,11 @@
 
 <!-- Title -->
 {%- if page.permalink == '/' -%}
+  {%- if page.title -%}
 <title>{{site.heading}} - {{page.title}}</title>
+  {%- else -%}
+<title>{{site.heading}}</title>
+  {%- endif -%}
 {%- elsif page.title -%}
 <title>{{page.title}} - {{site.heading}}</title>
 {%- elsif page.permalink == '/404.html' -%}
@@ -91,7 +147,11 @@
 <meta name="twitter:title" content="{{ page.title }}">
 {%- endif -%}
 {% else %}
+{%- if page.permalink == '/' -%}
 <meta name="twitter:title" content="{{ site.heading }}">
+{%- else -%}
+<meta name="twitter:title" content="{{ site.heading }}">
+{%- endif -%}
 {%- endif -%}
 {% assign page_content = page.content | strip_html | xml_escape | truncate: 180 %}
 {% if page.description %}
