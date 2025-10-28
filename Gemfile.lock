@@ -54,7 +54,7 @@ GEM
       rainbow (~> 3.0)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
-    json (2.15.1)
+    json (2.15.2)
     katex (0.10.0)
       execjs (~> 2.8)
     kramdown (2.5.1)
