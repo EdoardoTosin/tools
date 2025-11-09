@@ -156,7 +156,7 @@
     <!-- Lightbox2 -->
     <link rel="preload" href="{{ site.domain_url }}/assets/css/lightbox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{ site.domain_url }}/assets/css/lightbox-override.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <script src="{{ site.domain_url }}/assets/js/lightbox-plus-jquery.min.js" defer integrity="sha512-/IJVg2oav2TggiFftaMSPgttHNmgu/0RSGP64Nm7wqYwjkxj4hAHLRMJi3QNTa22f4pIkvTsCpB848HEilV6MA==" crossorigin="anonymous"></script>
+    <script src="{{ site.domain_url }}/assets/js/lightbox-plus-jquery.min.js" defer {{ site.domain_url | append: "assets/js/lightbox-plus-jquery.min.js" | sri_attrs }}></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         if (typeof lightbox !== 'undefined') {

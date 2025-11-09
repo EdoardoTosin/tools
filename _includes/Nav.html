@@ -34,8 +34,8 @@
       <a class="navbar-item" style="margin-left: -1em;"; href="{{ site.domain_url }}/">
           <img src="{{ site.domain_url }}/assets/img/favicon.png" alt="Logo" width="24" height="24"/>
           <h6> {{site.heading}}</h6></a>
-          <script src="{{ site.domain_url }}/assets/js/modeswitcher.js" integrity="sha512-65cc3cs5CbbpXFppG0S5Lobpp/e/OGT3YyEsoaGhWd+2Imr7UJKCO3x8fRZBjoz/HcLo5bU398E4yvCCaDBxQQ==" crossorigin="anonymous"></script>
-          <script src="{{ site.domain_url }}/assets/js/Hamburger.js" integrity="sha512-cxvd/gvXSuOsawCjUte10SOYPiOOq2tkqnYqsj/Y7/pEaqPtUUVmW1JP6F/BL8qxljplZ1FFzS1Ue1VD2BU+pg==" crossorigin="anonymous"></script>
+          <script src="{{ site.domain_url }}/assets/js/modeswitcher.js" {{ site.domain_url | append: "/assets/js/modeswitcher.js" | sri_attrs }}></script>
+          <script src="{{ site.domain_url }}/assets/js/Hamburger.js" {{ site.domain_url | append: "/assets/js/Hamburger.js" | sri_attrs }}></script>
       <div class="navbar-item navbar-dark-mode__mobile is-hidden-tablet" onclick="modeSwitcher()" aria-label="Toggle dark/light mode">
         <div class="buttons">
           <a class="button is-text">
