@@ -1,11 +1,21 @@
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
-**/.DS_Store
-pages/tags.md
-**/.obsidian
-tools/
-*.ps1
-*.sh
-/.vscode
+# Jekyll build output
+/_site/
+
+# Jekyll caches
+/.sass-cache/
+/.jekyll-cache/
+/.jekyll-metadata
+
+# System files
+.DS_Store
+
+# Editor environments
+.vscode/
+.obsidian/
+
+# Local HTTP/ACME files
+/.well-known/
+!/.well-known/security.txt
+
+# Project-specific utilities
+/utilities/
