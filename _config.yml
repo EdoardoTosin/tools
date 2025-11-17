@@ -113,12 +113,12 @@ exclude:
   - .github
   - .gitattributes
   - .gitignore
+  - .gitmodules
   - README.md
   - CODE_OF_CONDUCT.md
   - CONTRIBUTING.md
   - SECURITY.md
   - LICENSE
-  - tools
   - debug.yml
   - debug.sh
   - docker-compose.yml
