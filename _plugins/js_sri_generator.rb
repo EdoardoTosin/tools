@@ -224,6 +224,8 @@ module Jekyll
   # Liquid filters for SRI attributes
   module SriFilter
     def sri_attrs(input)
+      # Return empty string in development mode
+      return '' if development_mode?
       return '' if input.nil? || input.to_s.empty?
       
       data = find_sri_data(input.to_s.strip)
@@ -231,6 +233,8 @@ module Jekyll
     end
 
     def sri_integrity(input)
+      # Return empty string in development mode
+      return '' if development_mode?
       return '' if input.nil? || input.to_s.empty?
       
       data = find_sri_data(input.to_s.strip)
@@ -238,6 +242,8 @@ module Jekyll
     end
 
     def sri_crossorigin(input)
+      # Return empty string in development mode
+      return '' if development_mode?
       return '' if input.nil? || input.to_s.empty?
       
       data = find_sri_data(input.to_s.strip)
@@ -245,6 +251,10 @@ module Jekyll
     end
 
     private
+
+    def development_mode?
+      Jekyll.env == 'development'
+    end
 
     def find_sri_data(path)
       sri_data = load_sri_data
