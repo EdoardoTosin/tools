@@ -1,59 +1,55 @@
 # Automation Tools
 
-## :sparkles: Introduction
+A collection of automation scripts for Python, PowerShell, and Bash. Includes utilities for Raspberry Pi devices.
 
-A collection of personal scripts written in Python, PowerShell, and Bash, designed to streamline workflows and automate tasks. Some scripts are specifically made for Raspberry Pi devices.
+## Documentation
 
-## :notebook: Script Catalog
+See [SCRIPT_CATALOG.md](SCRIPT_CATALOG.md) for a complete list of available scripts and usage instructions.
 
-For a comprehensive list of scripts available in this repository and their usage instructions, please refer to the [SCRIPT_CATALOG.md](SCRIPT_CATALOG.md) file. It contains a variety of scripts for different platforms like Python, Linux, and Windows, along with convenient one-liner commands for downloading and executing them. Feel free to explore and utilize these scripts to streamline your workflow and automate various tasks.
+## Usage
 
-## :warning: Security Note
+### Linux
 
-***Executing scripts directly from URLs can pose security risks if the script content is not trusted. Always verify the source of the script and consider the potential implications of running remote scripts.***
-
-## :clipboard: How to Use in Linux
-
-To execute a script in Linux, use the following command format:
+Execute shell scripts:
 
 ```sh
 curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.sh | sh
 ```
 
+Execute Python scripts:
+
 ```sh
 curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py | python
 ```
 
-*Replace `script-name` with the actual filename of the script you wish to run.*
-
-### Passing Arguments
-
-Some scripts may require arguments. To pass arguments, append them after the script URL:
+Pass arguments to scripts:
 
 ```sh
 curl https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.sh | sh -s -- arg1 arg2
 ```
 
-Replace `arg1 arg2` with the actual arguments expected by the script.
+### Windows
 
-## :clipboard: How to Use in Windows
-
-To execute a script in Windows, use the following command format:
+Execute PowerShell scripts:
 
 ```powershell
 irm "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.ps1" | iex
 ```
 
+Execute Python scripts:
+
 ```powershell
 irm "https://raw.githubusercontent.com/EdoardoTosin/tools/main/_script/script-name.py" | python
 ```
 
-*Replace `script-name` with the actual filename of the script you wish to run.*
+## Security
 
-## :busts_in_silhouette: Contributing
+**Warning:** Executing scripts directly from remote URLs is potentially dangerous. Always review script contents before execution and verify the source is trusted.
 
-Contributions to the development of new scripts or improvements to existing ones are welcome. Please follow the standard GitHub workflow for submitting contributions.
+## Contributing
 
-## :page_facing_up: License
+Contributions are welcome. Follow standard GitHub workflow for pull requests.
 
-All scripts in this repository are released under the MIT License. See the [LICENSE](LICENSE) file for details.
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

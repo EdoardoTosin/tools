@@ -1,5 +1,7 @@
 # Security Policy
 
-## Reporting a Vulnerability
+Security vulnerabilities should be reported via:
 
-If you discover a security vulnerability within the source code, please send an e-mail to [Edoardo Tosin](https://github.com/EdoardoTosin). All security vulnerabilities will be addressed in a reasonable amount of time.
+**[security.txt](https://edoardotosin.com/.well-known/security.txt)**
+
+Please do not open public issues for security concerns.
